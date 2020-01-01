@@ -12,7 +12,7 @@
 
 * gitee镜像：
 
-* 文档同步发布在：
+* 文档同步发布在：<https://stm32-tech.readthedocs.io/zh_CN/latest/>
 
 #### 目录说明
 
