@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 前言 &mdash; 基于STM32嵌入式开发入门 0.0.1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="2. 资料介绍" href="01资料介绍.html" />
+    <link rel="prev" title="产品说明书" href="../spec/spec.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 基于STM32嵌入式开发入门
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">关于本项目</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">目录说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#id2">文档说明</a></li>
+</ul>
+<p class="caption"><span class="caption-text">产品说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../spec/spec.html">产品说明书</a></li>
+</ul>
+<p class="caption"><span class="caption-text">入门教程</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 前言</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.1. 学习说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.2. 教程说明</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="01资料介绍.html">2. 资料介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02单片机最小系统说明.html">3. 最小系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3建立工程/建立工程.html">4. 建立工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4点亮led/led.html">5. IO&amp;点亮LED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05开发工具.html">6. 提高效率的工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6点亮数码管/seg1.html">7. 点亮数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8动态扫描数码管/seg8.html">9. 动态扫描数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9源码结构整理/str.html">10. 良好代码架构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10按键扫描/io_key.html">11. IO输入与按键扫描</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11外部中断/exit.html">12. 外部中断与按键触发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12定时器/timer.html">13. 定时器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13PWM蜂鸣器/Pwm.html">14. PWM输出与蜂鸣器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14串口与调试信息/uart.html">15. 串口与调试信息输出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_ADC/ADC.html">16. ADC模数转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_DAC/dac.html">17. DAC数模转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_RTC/RTC.html">18. 时钟和日历</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_I2C_EERROM/i2c.html">19. I2C与EEPROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_SPI_FLASH/spi.html">20. SPI与SPI FLASH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_I2C_OLED/oled.html">21. OLED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_SPI_COG/cog.html">22. SPI控制COG LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_FSMC_TFT/FSMC.html">23. FSMC与TFT LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_VSPI_tslib_TP/tp.html">24. 触摸屏与Tslib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_SDIO/sdio.html">25. SDIO通信</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_USB/USB.html">26. USB</a></li>
+</ul>
+<p class="caption"><span class="caption-text">提高教程</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Advanced/uart_ringbuf.html">1. 串口中断和环形缓冲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Advanced/keypad.html">2. 矩阵按键</a></li>
+</ul>
+<p class="caption"><span class="caption-text">版权</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">版权说明</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">基于STM32嵌入式开发入门</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>前言</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/base/00前言.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">1. </span>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>欢迎大家参加本学习教程。</p>
+<p>先跟大家说明做本教程的原因。</p>
+<p>在目前市面上，基于STM32的学习教程非常丰富，也非常好。</p>
+<p>那为什么还要浪费时间呢？</p>
+<p>如果熟悉这些教程的朋友应该了解，这些教程对于入门，了解概念，非常合适。</p>
+<p>比如，我们要使用一个新外设，根本不知道这个外设是怎么工作的，通过这些教程，可以快速学会如何使用这个设备。</p>
+<p>但是这些教程基本都有一个缺点：没有考虑实际项目工程开发的软件设计！</p>
+<p>很多教程，只是官方例程的补充说明。没有考虑软件工程的事、没有考虑系统流程、没有考虑模块化设计、没有考虑接口设计、没有考虑分层设计。</p>
+<p>基于这样的考虑，我设计了一套精巧的STM32F407开发板。这个开发板的外设、接口，都是基于上述问题设计：如何模块化、如何设计接口、如何设计软件分成。</p>
+<p>在这套硬件上，最后形成了一个可复用的模块：PetiteDrv。</p>
+<p>但是这套软件有个问题，对于入门者非常不友善。因此决定再设计一个入门的开发板。</p>
+<p>目的仅仅是引到大家走向更专业的软件开发，因此性价比极高，整体的设计也非常适合自学和实验室做实验。</p>
+<p>同时编写一套入门文档，有以下特点：</p>
+<p>1 根据开发板，做25个教程。只为引到入门，更多的教程大家可以从其他地方学习。</p>
+<p>2 从实用的目的，用实用的方法，教大家如何进行嵌入式开发，不照本宣科。</p>
+<p>3 只挑有用的知识点讲解，不做大而全。没有几千页，只有几十页。因此，很可能错漏很多知识点。</p>
+<p>4  在将入门知识之外，引出一些软件工程问题，仅做抛砖引玉。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">1.1. </span>学习说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>要不要学51</p>
+<p>不是必须，学过当然好，有基础，入门更快。</p>
+</li>
+<li><p>要不要学汇编</p>
+<p>不是必须，学过当然后，如果有汇编知识，说明你对芯片底层的操作更加清楚。当遇到一些疑难问题时，你考虑问题就更加全面，也就更容易解决问题。</p>
+</li>
+<li><p>基础要求</p>
+<p>那0基础也能学吗？</p>
+<p>我不敢说学不会，但是建议最好有以下基础：</p>
+<blockquote>
+<div><p>模电：你总要知道电源、电压、电流、电阻，这些概念吧。</p>
+<p>数电：清楚1和0是啥、清楚一些常用的逻辑器件、清楚一些常规逻辑操作（与或非等）</p>
+<p>C语言：程序使用C语言编写。</p>
+</div></blockquote>
+</li>
+</ul>
+<p><em>在&lt;W108_F103_Tech\ref\0 C语言&gt;目录中有一些我收集的C语言资料</em></p>
+<p>C语言推荐下面这本书：</p>
+<p><img alt="../_images/Cprogram.png" src="../_images/Cprogram.png" /></p>
+<p>C语言进阶可读下面这本</p>
+<p><img alt="../_images/C_shendujiepao.png" src="../_images/C_shendujiepao.png" /></p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.2. </span>教程说明<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>本教程分两部分</p>
+<ol class="simple">
+<li><p>base</p></li>
+<li><p>Advanced</p></li>
+</ol>
+<p>当前教程如下：</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th></th>
+<th>名称</th>
+<th>说明</th>
+<th></th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>前言</td>
+<td>介绍本教程</td>
+<td>13</td>
+<td>PWM蜂鸣器</td>
+<td>简单PWM使用，驱动蜂鸣器</td>
+</tr>
+<tr>
+<td>01</td>
+<td>资料介绍</td>
+<td>说明教程资料都有些什么内容</td>
+<td>14</td>
+<td>串口与调试信息</td>
+<td>串口的概念，如何使用串口输出调试信息</td>
+</tr>
+<tr>
+<td>02</td>
+<td>最小系统说明</td>
+<td>介绍单片机最小系统的组成</td>
+<td>15</td>
+<td>ADC</td>
+<td>模拟电压转换为数字</td>
+</tr>
+<tr>
+<td>03</td>
+<td>建立工程</td>
+<td>教大家如何用MDK建立一个项目工程</td>
+<td>16</td>
+<td>DAC</td>
+<td>数字转换为模拟量</td>
+</tr>
+<tr>
+<td>04</td>
+<td>点亮LED</td>
+<td>点亮LED，实现流水灯</td>
+<td>17</td>
+<td>RTC</td>
+<td>RTC初始化和基本应用</td>
+</tr>
+<tr>
+<td>05</td>
+<td>开发工具</td>
+<td>介绍可提高效率的开发工具：<br />Source Insight 4.0<br />Beyond compare<br />git</td>
+<td>18</td>
+<td>I2C EEPROM</td>
+<td>学习I2C通信，学习EEPROM的使用。</td>
+</tr>
+<tr>
+<td>06</td>
+<td>点亮数码管</td>
+<td>使用一位8段数码管显示数字</td>
+<td>19</td>
+<td>SPI FLASH</td>
+<td>学习SPI 通信，学习SPI FLASH的特点和基本操作。</td>
+</tr>
+<tr>
+<td>07</td>
+<td>程序各种要素</td>
+<td>一个程序有多少东西：变量、函数、流程、宏定义、堆和栈、库函数</td>
+<td>20</td>
+<td>I2C OLED</td>
+<td>学习显示屏的一些基本概念，使用I2C接口控制OLED</td>
+</tr>
+<tr>
+<td>08</td>
+<td>动态扫描数码管</td>
+<td>使用动态扫描方法在8位数码管上显示数字。</td>
+<td>21</td>
+<td>SPI COG</td>
+<td>使用SPI口控制COG LCD</td>
+</tr>
+<tr>
+<td>09</td>
+<td>源码结构整理</td>
+<td>一个工程的源文件如何管理？</td>
+<td>22</td>
+<td>FSMC TFT</td>
+<td>使用FSMC控制TFT LCD</td>
+</tr>
+<tr>
+<td>10</td>
+<td>按键扫描</td>
+<td>如何检测按键？如何防抖？</td>
+<td>23</td>
+<td>VSPI Tslib TP</td>
+<td>用IO口模拟SPI控制触摸芯片，使用Tslib库进行触摸屏校准。</td>
+</tr>
+<tr>
+<td>11</td>
+<td>外部中断</td>
+<td>中断的原理，外部中断的使用</td>
+<td>24</td>
+<td>SDIO</td>
+<td>学习如何从官方库移植代码</td>
+</tr>
+<tr>
+<td>12</td>
+<td>定时器</td>
+<td>定时器的使用</td>
+<td>25</td>
+<td>USB</td>
+<td></td>
+</tr>
+</tbody>
+</table><p>提高教程</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th></th>
+<th>名称</th>
+<th>说明</th>
+<th></th>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>串口中断和环形缓冲</td>
+<td>学习环形缓冲，学习前后台程序的设计，学习数据分层的概念</td>
+<td>2</td>
+<td>矩阵按键扫描</td>
+<td>学习如何扫描矩阵按键，学习软件接口设计和数据分层理念，学习模块化设计</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table><hr class="docutils" />
+<p>20200101</p>
+<p>END</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01资料介绍.html" class="btn btn-neutral float-right" title="2. 资料介绍" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../spec/spec.html" class="btn btn-neutral float-left" title="产品说明书" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, wujique
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

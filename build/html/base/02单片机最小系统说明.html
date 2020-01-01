@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. 最小系统 &mdash; 基于STM32嵌入式开发入门 0.0.1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="4. 建立工程" href="3建立工程/建立工程.html" />
+    <link rel="prev" title="2. 资料介绍" href="01资料介绍.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 基于STM32嵌入式开发入门
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">关于本项目</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">目录说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#id2">文档说明</a></li>
+</ul>
+<p class="caption"><span class="caption-text">产品说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../spec/spec.html">产品说明书</a></li>
+</ul>
+<p class="caption"><span class="caption-text">入门教程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00前言.html">1. 前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01资料介绍.html">2. 资料介绍</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. 最小系统</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.1. 为什么叫单片机？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.2. 最小系统说明</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3建立工程/建立工程.html">4. 建立工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4点亮led/led.html">5. IO&amp;点亮LED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05开发工具.html">6. 提高效率的工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6点亮数码管/seg1.html">7. 点亮数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8动态扫描数码管/seg8.html">9. 动态扫描数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9源码结构整理/str.html">10. 良好代码架构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10按键扫描/io_key.html">11. IO输入与按键扫描</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11外部中断/exit.html">12. 外部中断与按键触发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12定时器/timer.html">13. 定时器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13PWM蜂鸣器/Pwm.html">14. PWM输出与蜂鸣器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14串口与调试信息/uart.html">15. 串口与调试信息输出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_ADC/ADC.html">16. ADC模数转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_DAC/dac.html">17. DAC数模转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_RTC/RTC.html">18. 时钟和日历</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_I2C_EERROM/i2c.html">19. I2C与EEPROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_SPI_FLASH/spi.html">20. SPI与SPI FLASH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_I2C_OLED/oled.html">21. OLED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_SPI_COG/cog.html">22. SPI控制COG LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_FSMC_TFT/FSMC.html">23. FSMC与TFT LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_VSPI_tslib_TP/tp.html">24. 触摸屏与Tslib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_SDIO/sdio.html">25. SDIO通信</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_USB/USB.html">26. USB</a></li>
+</ul>
+<p class="caption"><span class="caption-text">提高教程</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Advanced/uart_ringbuf.html">1. 串口中断和环形缓冲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Advanced/keypad.html">2. 矩阵按键</a></li>
+</ul>
+<p class="caption"><span class="caption-text">版权</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">版权说明</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">基于STM32嵌入式开发入门</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">3. </span>最小系统</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/base/02单片机最小系统说明.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">3. </span>最小系统<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>在将单片机的最小系统之前，我们先来认识认识单片机。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">3.1. </span>为什么叫单片机？<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>纵观计算机的发展，最开始的计算机是一台巨无霸，后面技术更新，变小了，我们称之为微机。</p>
+<p>微机，也就是最开始的电脑，发展到目前，电脑通常包含以下几个部件：</p>
+<ol class="simple">
+<li><p>CPU</p></li>
+<li><p>主板</p></li>
+<li><p>硬盘</p></li>
+<li><p>显示器</p></li>
+<li><p>键盘鼠标</p></li>
+<li><p>内存</p></li>
+</ol>
+<p>其中主板有包含了一堆外设：</p>
+<p>那么单片机，也就是所谓的MCU，其实就是跟电脑相比。</p>
+<p>因为在一颗芯片上，包含了CPU，硬盘、内存、一堆外设，就像一台小电脑一样。所以叫单片机。</p>
+<p>我们看看STM32103VET的框图。在<STM32F103VET6 datasheet.pdf>文档中。</p>
+<p>如下：</p>
+<p><img alt="../_images/B02_stm32_diagram.png" src="../_images/B02_stm32_diagram.png" /></p>
+<ul class="simple">
+<li><p>红框1中就是内核Cortex-M3，功能相当于电脑上的CPU。</p></li>
+<li><p>红框2中是Flash，我们选的这款芯片片上包含512K。相当于电脑的硬盘，用于保存代码和数据。</p></li>
+<li><p>红框3中的是SRAM，片上含64K。相当于电脑的内存。</p></li>
+</ul>
+<blockquote>
+<div><p><em>有些同学可能觉得这个比喻不是很恰当，确实，现在的芯片有很多种类，有些芯片内部没有FLASH，有些芯片不含RAM。</em></p>
+<p>不过大家可以搜索一下苹果最开始的电脑，这些早起电脑就是用6052内核的芯片做的，现在在看功能其实相当简单，就像一个单片机一样。</p>
+<p>6052的内核，在很多台系的单片机上还在使用，就像8051内核一样，持久不衰。</p>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">3.2. </span>最小系统说明<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>单片机能工作的最小外围电路就叫做最小系统。</p>
+<p>通常包含：</p>
+<ol class="simple">
+<li><p>时钟，也就是晶振。时钟相当于芯片的心脏，只有时钟，芯片才能工作。</p></li>
+<li><p>工作电源，这个不用解释了，所有电子设备都需要电源才能工作。不同的芯片工作电源不一样，有5V系统，3.3V系统，1.8V系统。</p></li>
+<li><p>其他一些必要的外部设置，例如启动模式选择。</p></li>
+</ol>
+<p>我们打开原理图，第一页，就是最小系统。居中的就是STM32F103VET6。</p>
+<p><img alt="../_images/b02_zuixiaoxitong.png" src="../_images/b02_zuixiaoxitong.png" /></p>
+<p>细分的话，整个最小系统分一下部分：</p>
+<ul>
+<li><p>电源</p>
+<p>电源又分3部分，主电源，也就是上图中框图1，实际就是一个3.3V电源和一些电容。</p>
+<p>模拟电源，红框4中的电源就是，模拟电源由主电源通过磁珠等手段格力而得。</p>
+<p>备份电源，红框8就是，用处是，低功耗下维持CPU的RTC和备份区功能。</p>
+</li>
+<li><p>主时钟，也就是CPU大部分外设工作的时钟。红框5的8M晶振电路就是主时钟。</p></li>
+<li><p>RTC时钟，红框2处即是，频率是32.768M。</p></li>
+<li><p>复位电路，红框3处即是。用于复位CPU，通常是低电平复位。</p>
+<p>上电时，阻容电路没充电，复位脚是低电平，CPU进行复位，电容充满电后，复位脚是高电平，CPU复位完成。这就是常说的上电复位过程。</p>
+<p>正常工作中，按下按键，将复位脚拉低到低电平，进行复位。</p>
+</li>
+<li><p>启动选择电路，红框6就是STM32的启动选择电路。</p></li>
+<li><p>调试口，红框7处就是调试口。什么是调试？通过电脑上的工具调试芯片。</p></li>
+</ul>
+<p>实际上，一个单片机，只需要：<code class="docutils literal notranslate"><span class="pre">主电源</span></code>、<code class="docutils literal notranslate"><span class="pre">主时钟</span></code>、<code class="docutils literal notranslate"><span class="pre">复位电路</span></code>，<code class="docutils literal notranslate"><span class="pre">驱动选择电路</span></code>， 芯片就能运行了。</p>
+<p>很多芯片甚至不需要主时钟，使用芯片内部的时钟就可以运行代码。STM32也有内部时钟，只不过，相对外部晶振来说，内部时钟的精度会差很多。</p>
+<hr class="docutils" />
+<p>20200101</p>
+<p>end</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="3建立工程/建立工程.html" class="btn btn-neutral float-right" title="4. 建立工程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01资料介绍.html" class="btn btn-neutral float-left" title="2. 资料介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, wujique
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

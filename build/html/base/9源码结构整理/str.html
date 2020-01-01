@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10. 良好代码架构 &mdash; 基于STM32嵌入式开发入门 0.0.1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="11. IO输入与按键扫描" href="../10按键扫描/io_key.html" />
+    <link rel="prev" title="9. 动态扫描数码管" href="../8动态扫描数码管/seg8.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 基于STM32嵌入式开发入门
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">关于本项目</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">目录说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#id2">文档说明</a></li>
+</ul>
+<p class="caption"><span class="caption-text">产品说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../spec/spec.html">产品说明书</a></li>
+</ul>
+<p class="caption"><span class="caption-text">入门教程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../00前言.html">1. 前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01资料介绍.html">2. 资料介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02单片机最小系统说明.html">3. 最小系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3建立工程/建立工程.html">4. 建立工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4点亮led/led.html">5. IO&amp;点亮LED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05开发工具.html">6. 提高效率的工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6点亮数码管/seg1.html">7. 点亮数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8动态扫描数码管/seg8.html">9. 动态扫描数码管</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. 良好代码架构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10按键扫描/io_key.html">11. IO输入与按键扫描</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11外部中断/exit.html">12. 外部中断与按键触发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12定时器/timer.html">13. 定时器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13PWM蜂鸣器/Pwm.html">14. PWM输出与蜂鸣器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14串口与调试信息/uart.html">15. 串口与调试信息输出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15_ADC/ADC.html">16. ADC模数转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16_DAC/dac.html">17. DAC数模转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17_RTC/RTC.html">18. 时钟和日历</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18_I2C_EERROM/i2c.html">19. I2C与EEPROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19_SPI_FLASH/spi.html">20. SPI与SPI FLASH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20_I2C_OLED/oled.html">21. OLED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21_SPI_COG/cog.html">22. SPI控制COG LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22_FSMC_TFT/FSMC.html">23. FSMC与TFT LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23_VSPI_tslib_TP/tp.html">24. 触摸屏与Tslib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24_SDIO/sdio.html">25. SDIO通信</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25_USB/USB.html">26. USB</a></li>
+</ul>
+<p class="caption"><span class="caption-text">提高教程</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Advanced/uart_ringbuf.html">1. 串口中断和环形缓冲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Advanced/keypad.html">2. 矩阵按键</a></li>
+</ul>
+<p class="caption"><span class="caption-text">版权</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">版权说明</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">基于STM32嵌入式开发入门</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">10. </span>良好代码架构</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/base/9源码结构整理/str.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">10. </span>良好代码架构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>头文件，宏定义，多文件分开。</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../10按键扫描/io_key.html" class="btn btn-neutral float-right" title="11. IO输入与按键扫描" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../8动态扫描数码管/seg8.html" class="btn btn-neutral float-left" title="9. 动态扫描数码管" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, wujique
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. 资料介绍 &mdash; 基于STM32嵌入式开发入门 0.0.1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="3. 最小系统" href="02单片机最小系统说明.html" />
+    <link rel="prev" title="1. 前言" href="00前言.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 基于STM32嵌入式开发入门
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">关于本项目</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">目录说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#id2">文档说明</a></li>
+</ul>
+<p class="caption"><span class="caption-text">产品说明</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../spec/spec.html">产品说明书</a></li>
+</ul>
+<p class="caption"><span class="caption-text">入门教程</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00前言.html">1. 前言</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 资料介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1. 开发板模块介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.2. 资料介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stm32">2.3. STM32库说明</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02单片机最小系统说明.html">3. 最小系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3建立工程/建立工程.html">4. 建立工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4点亮led/led.html">5. IO&amp;点亮LED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05开发工具.html">6. 提高效率的工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6点亮数码管/seg1.html">7. 点亮数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8动态扫描数码管/seg8.html">9. 动态扫描数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9源码结构整理/str.html">10. 良好代码架构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10按键扫描/io_key.html">11. IO输入与按键扫描</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11外部中断/exit.html">12. 外部中断与按键触发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12定时器/timer.html">13. 定时器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13PWM蜂鸣器/Pwm.html">14. PWM输出与蜂鸣器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14串口与调试信息/uart.html">15. 串口与调试信息输出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_ADC/ADC.html">16. ADC模数转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_DAC/dac.html">17. DAC数模转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_RTC/RTC.html">18. 时钟和日历</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_I2C_EERROM/i2c.html">19. I2C与EEPROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_SPI_FLASH/spi.html">20. SPI与SPI FLASH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_I2C_OLED/oled.html">21. OLED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_SPI_COG/cog.html">22. SPI控制COG LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_FSMC_TFT/FSMC.html">23. FSMC与TFT LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_VSPI_tslib_TP/tp.html">24. 触摸屏与Tslib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_SDIO/sdio.html">25. SDIO通信</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_USB/USB.html">26. USB</a></li>
+</ul>
+<p class="caption"><span class="caption-text">提高教程</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Advanced/uart_ringbuf.html">1. 串口中断和环形缓冲</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Advanced/keypad.html">2. 矩阵按键</a></li>
+</ul>
+<p class="caption"><span class="caption-text">版权</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">版权说明</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">基于STM32嵌入式开发入门</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">2. </span>资料介绍</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/base/01资料介绍.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">2. </span>资料介绍<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>本章节对本教程的文档进行必要说明。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">2.1. </span>开发板模块介绍<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>硬件介绍请参考&lt;W108_F103_Tech\doc\source\spec&gt;、或者是&lt;W108_F103_Tech\data\SPEC&gt;中的pdf文档。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">2.2. </span>资料介绍<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="o">|</span>
+<span class="o">|--</span><span class="n">code</span>
+<span class="o">|--</span><span class="n">data</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">HDK</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">REF</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">SDK</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">SPEC</span>
+<span class="o">|--</span><span class="n">doc</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">build</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">source</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">spec</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">base</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">Advanced</span>
+<span class="o">|--</span><span class="n">ref</span>
+<span class="o">|--</span><span class="n">readme</span><span class="p">.</span><span class="n">md</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Code目录</p>
+<p>这个目录保存了教程的相关代码。全部为压缩包形式。在代码中有丰富的注释。</p>
+</li>
+<li><p>data目录</p>
+<p>这个目录是产品说明文档。包含4个子目录。</p>
+<p>HDK是硬件原理图和丝印说明。<br />REF是主控相关资料。<br />SDK为ST提供的相关库。<br />开发板产品说明书</p>
+</li>
+<li><p>doc目录</p>
+<p>教程文档。</p>
+<p><code class="docutils literal notranslate"><span class="pre">build</span></code>是md转换为html的目录。</p>
+<p><code class="docutils literal notranslate"><span class="pre">source</span></code>是md文档目录。其中<code class="docutils literal notranslate"><span class="pre">spec</span></code>是产品说明书，<code class="docutils literal notranslate"><span class="pre">base</span></code>是基础教程，<code class="docutils literal notranslate"><span class="pre">Advanced</span></code>是提高教程。</p>
+<p>本教程文档使用<strong>markdown</strong>格式，使用<strong>Typora</strong>编写。</p>
+<p>所有文档使用<strong>Sphinx</strong>管理。</p>
+<p><code class="docutils literal notranslate"><span class="pre">doc\source</span></code>目录下的md文件为文档源文件。包含<code class="docutils literal notranslate"><span class="pre">Advanced</span></code>、<code class="docutils literal notranslate"><span class="pre">base</span></code>、<code class="docutils literal notranslate"><span class="pre">spec</span></code>等子目录的文件。</p>
+<p>md文件经过sphinx处理后，生成html文件。文件入口在<code class="docutils literal notranslate"><span class="pre">doc\build\html</span></code>中的<code class="docutils literal notranslate"><span class="pre">index.html</span></code>，使用浏览器打开即可浏览所有文档。</p>
+<p>sphinx可以将文档处理为pdf，如有需要，可自行转换。</p>
+<p>Typora也可以将md文档转换为pdf。</p>
+<blockquote>
+<div><p>可参考：</p>
+<p>《使用ReadtheDocs托管文档》</p>
+<p><a class="reference external" href="https://www.xncoding.com/2017/01/22/fullstack/readthedoc.html">https://www.xncoding.com/2017/01/22/fullstack/readthedoc.html</a></p>
+</div></blockquote>
+</li>
+<li><p>ref目录</p>
+<p>本目录包含一些Code目录相关，或者教程相关的文档和资料。例如一些软件工具、一些从网络获取的文档资料等。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="stm32">
+<h2><span class="section-number">2.3. </span>STM32库说明<a class="headerlink" href="#stm32" title="永久链接至标题">¶</a></h2>
+<p>库有多重要？</p>
+<p>当你有一定基础时，学习一款新芯片，最好的渠道就是库，就是库中包含的历程。</p>
+<p>当你用一款新芯片做项目开发时，最好的资料就是库和历程，对于硬件的底层操作，完全可以拷贝官方例程的代码。我们专心做上层驱动和应用就行了。</p>
+<p>可以说，ST推出库的这个创意，大大方便了开发人员。</p>
+<p>我们不用再关心一个外设寄存器的bit0是什么作用。我们只需要知道，这个外设有一个功能，用库接口操作即可。</p>
+<p>下面我们看看STM32的库到底是如何组成的。</p>
+<ul class="simple">
+<li><p>ST有很多库，我们现在说的是标准外设库：<code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Lib_V3.5.0</span></code></p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="o">|--</span><span class="n">_htmresc</span>
+<span class="o">|--</span><span class="n">Libraries</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">CMSIS</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">STM32F10x_StdPeriph_Driver</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">inc</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">src</span>
+<span class="o">|--</span><span class="n">Project</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">STM32F10x_StdPeriph_Examples</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">STM32F10x_StdPeriph_Template</span>
+<span class="o">|--</span><span class="n">Utilities</span>
+<span class="o">|</span>	<span class="o">|--</span><span class="n">STM32_EVAL</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">Common</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">STM32L152_EVAL</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">STM3210B_EVAL</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">STM3210C_EVAL</span>
+<span class="o">|</span>		<span class="p">...</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">stm32_eval</span><span class="p">.</span><span class="n">c</span>
+<span class="o">|</span>		<span class="o">|--</span><span class="n">stm32_eval</span><span class="p">.</span><span class="n">h</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Libraries</p>
+<p>库文件目录，所谓的库，其实就是用c语言将底层操作封装，用户不用再关心寄存器级别的操作。</p>
+<p>包含两部分：</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMSIS</span></code>, 这是内核相关的。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Driver</span></code>， 这是芯片相关的。在文档中包含了所有的外设操作。src是源文件，Inc是include的缩写，文件夹中的文件是头文件。</p></li>
+</ol>
+</li>
+<li><p>Project</p>
+<p>例程和模板。</p>
+<p>Examples中的就是官方例程，对于我们开发程序有非常重要的参考意义。</p>
+</li>
+<li><p>Utilities</p>
+<p>不同官方开发板的接口封装。什么意思呢？</p>
+<p>在Examples中有很多例程，官方有很多开发板，那么是不是每个开发板都写一个例程呢？</p>
+<p>当然不是，例如，一个操作SPI FLASH的例程，操作SPI FLASH的程序，在不同的开发板都是一样的，那么这些代码就放在Examples目录下。</p>
+<p>操作FLASH需要SPI接口，需要IO口，不同的芯片，不同的开发板，代码是有区别的。比如F103和STM32Lxx .</p>
+<p>这些不同的操作，就放在Utilities目录下。</p>
+<p>我们参考一个例程，处理Examples中的代码，还有STM32_EVAL下对应平台的代码。</p>
+<p>当前我们的教学板是STM32103VET，我们要参考的代码就在STM3210E_EVAL目录下。</p>
+<p><strong>当然，还有一些是所有平台都通用的，那么就放在stm32_eval.c源文件中</strong></p>
+</li>
+</ul>
+<hr class="docutils" />
+<p>20200101</p>
+<p>end</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02单片机最小系统说明.html" class="btn btn-neutral float-right" title="3. 最小系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="00前言.html" class="btn btn-neutral float-left" title="1. 前言" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, wujique
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

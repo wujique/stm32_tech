@@ -1,0 +1,34 @@
+# 建立工程
+
+创建好一个空的工程。
+
+从库拷贝需要的文件。
+
+建立一个mcu文件夹。
+把STM32F10x_StdPeriph_Lib_V3.5.0\Libraries下的STM32F10x_StdPeriph_Driver文件夹拷贝到mcu目录
+名字太长，改为stdlib
+
+拷贝STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_Examples\GPIO\IOToggle 中的文件到mcu目录
+
+拷贝STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x 中的源文件
+拷贝启动代码，注意选对编译工具和型号
+STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm
+
+拷贝完后，还需要添加到工程
+先选中目标名，再单击，修改为stm32_tech
+同样修改源文件目录名
+添加文件，添加启动代码的时候要注意
+新建一个Stlib的文件夹，把库文件全部添加
+
+尝试编译
+错误说明
+
+工程配置
+
+不建议在工程中定义宏
+
+添加头文件
+
+编译 错误
+
+定义型号 使用标准库，要修改文件属性为可写才能修改
