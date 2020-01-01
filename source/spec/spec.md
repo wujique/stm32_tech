@@ -84,7 +84,7 @@
 
 接法如下图
 
-![](pic/pic3.jpg)
+![](pic/pic3.JPG)
 
 #### 纽扣电池
 
@@ -92,7 +92,7 @@
 
 接法如下图
 
-![](pic/pic4.jpg)
+![](pic/pic4.JPG)
 
 #### cog lcd
 
@@ -102,7 +102,7 @@ LCD方向朝下，注意看电源与地即可。
 
 接法如下图
 
-![](pic/pic5.jpg)
+![](pic/pic5.JPG)
 
 #### WIFI模块
 
@@ -110,7 +110,7 @@ LCD方向朝下，注意看电源与地即可。
 
 接法如下图
 
-![](pic/pic6.jpg)
+![](pic/pic6.JPG)
 
 
 
@@ -120,7 +120,7 @@ LCD方向朝下，注意看电源与地即可。
 
 接法如下图
 
-![](pic/pic7.jpg)
+![](pic/pic7.JPG)
 
 #### OLED(spi)
 
@@ -134,7 +134,7 @@ LCD方向朝下，注意看电源与地即可。
 
 接法如下图
 
-![](pic/pic8.jpg)
+![](pic/pic8.JPG)
 
 #### BOOT选择
 
