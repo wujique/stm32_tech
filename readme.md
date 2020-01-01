@@ -1,12 +1,14 @@
-本目录文件位STM32F103VET教学板相关文件
+本目录文件为STM32F103VET教学板相关文件
 
-本目录发布与百度云与github，
+本教程发布于百度云与github，
 
-* 百度云地址：https://pan.baidu.com/s/12o0Vh4Tv4z_O8qh49JwLjg，目录W108_F103_Tech
+* 百度云地址：https://pan.baidu.com/s/12o0Vh4Tv4z_O8qh49JwLjg
+
+  目录W108_F103_Tech
 
 * github: <https://github.com/wujique/stm32_tech>
 
-  在github上托管的仅仅是doc目录。
+  在github上托管的仅仅是doc目录。其他资料请从百度云下载。
 
 * gitee镜像：
 
@@ -20,17 +22,29 @@
 | ---- | ------------------------------------------------------------ | ---- |
 | code | 例程代码，部分教程无代码                                     |      |
 | data | 硬件资料：<br />HDK是硬件原理图和丝印说明。<br />REF是主控相关资料。<br />SDK为ST提供的相关库。<br />开发板产品说明书 |      |
-| doc  | 文档，本教程文档使用sphinx+markdown编写。源文档在source目录。使用浏览器打开build\html目录中的index.html，可用网页方式查看文档。 |      |
+| doc  | 文档，本教程文档使用sphinx+markdown编写。源文档在source目录。使用浏览器打开build\html目录中的index.html，可用网页方式查看文档。<br />文档托管于github |      |
 | ref  | 教程相关的文档和工具                                         |      |
 
-#### 文档说明
+#### DOC目录文档说明
 
-本教程文档使用markdown格式，使用Typora编写。
+`build`是md转换为html的目录。
 
-所有文档使用Sphinx管理。
+`source`是md文档目录。其中`spec`是产品说明书，`base`是基础教程，`Advanced`是提高教程。
 
-doc\source目录下的md文件为文档源文件。包含Advanced、base、spec等子目录的文件。
+本教程文档使用**markdown**格式，使用**Typora**编写。
 
-md文件经过sphinx处理后，生成html文件。文件入口在doc\build\html中的index.html，使用浏览器打开即可浏览所有文档。
+所有文档使用**Sphinx**管理。
+
+`doc\source`目录下的md文件为文档源文件。包含`Advanced`、`base`、`spec`等子目录的文件。
+
+md文件经过sphinx处理后，生成html文件。文件入口在`doc\build\html`中的`index.html`，使用浏览器打开即可浏览所有文档。
 
 sphinx可以将文档处理为pdf，如有需要，可自行转换。
+
+Typora也可以将md文档转换为pdf。
+
+> 可参考：
+>
+> 《使用ReadtheDocs托管文档》
+>
+> <https://www.xncoding.com/2017/01/22/fullstack/readthedoc.html>
