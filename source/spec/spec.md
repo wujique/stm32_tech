@@ -32,7 +32,7 @@
 
 ## 模块说明
 
-![](pic/spec_pic1.png)
+![](pic/spec_pic1.jpg)
 
 
 
