@@ -84,7 +84,7 @@
               <p class="caption"><span class="caption-text">关于本项目</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">目录说明</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../README.html#id2">文档说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#doc">DOC目录文档说明</a></li>
 </ul>
 <p class="caption"><span class="caption-text">产品说明</span></p>
 <ul>
@@ -96,7 +96,11 @@
 <li class="toctree-l1"><a class="reference internal" href="01资料介绍.html">2. 资料介绍</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. 最小系统</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">3.1. 为什么叫单片机？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">3.2. 最小系统说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.2. 最小系统说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.2.1. 原理图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.2.2. 硬件最小系统</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="3建立工程/建立工程.html">4. 建立工程</a></li>
@@ -215,7 +219,7 @@
 <p>因为在一颗芯片上，包含了CPU，硬盘、内存、一堆外设，就像一台小电脑一样。所以叫单片机。</p>
 <p>我们看看STM32103VET的框图。在<STM32F103VET6 datasheet.pdf>文档中。</p>
 <p>如下：</p>
-<p><img alt="../_images/B02_stm32_diagram.png" src="../_images/B02_stm32_diagram.png" /></p>
+<p><img alt="../_images/B02_STM32_diagram.png" src="../_images/B02_STM32_diagram.png" /></p>
 <ul class="simple">
 <li><p>红框1中就是内核Cortex-M3，功能相当于电脑上的CPU。</p></li>
 <li><p>红框2中是Flash，我们选的这款芯片片上包含512K。相当于电脑的硬盘，用于保存代码和数据。</p></li>
@@ -236,29 +240,47 @@
 <li><p>工作电源，这个不用解释了，所有电子设备都需要电源才能工作。不同的芯片工作电源不一样，有5V系统，3.3V系统，1.8V系统。</p></li>
 <li><p>其他一些必要的外部设置，例如启动模式选择。</p></li>
 </ol>
+<div class="section" id="id4">
+<h3><span class="section-number">3.2.1. </span>原理图<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>我们打开原理图，第一页，就是最小系统。居中的就是STM32F103VET6。</p>
-<p><img alt="../_images/b02_zuixiaoxitong.png" src="../_images/b02_zuixiaoxitong.png" /></p>
+<p><img alt="../_images/B02_zuixiaoxitong.png" src="../_images/B02_zuixiaoxitong.png" /></p>
 <p>细分的话，整个最小系统分一下部分：</p>
 <ul>
 <li><p>电源</p>
 <p>电源又分3部分，主电源，也就是上图中框图1，实际就是一个3.3V电源和一些电容。</p>
-<p>模拟电源，红框4中的电源就是，模拟电源由主电源通过磁珠等手段格力而得。</p>
-<p>备份电源，红框8就是，用处是，低功耗下维持CPU的RTC和备份区功能。</p>
+<p>模拟电源，红框4中的电源就是，模拟电源由主电源通过磁珠等手段隔离而得。</p>
+<p>备份电源，红框8就是，用处是，低功耗下维持CPU的RTC和备份区功能。使用一个二极管并联，有外电时使用外电3.3V，没有外电时才使用纽扣电池电源。</p>
 </li>
-<li><p>主时钟，也就是CPU大部分外设工作的时钟。红框5的8M晶振电路就是主时钟。</p></li>
+<li><p>主时钟，也就是CPU大部分外设工作的时钟。红框5的8M晶振电路就是主时钟。晶振电路通常都是由一个晶体和2个电容组成。晶体的频率就是主频。电容容值根据芯片设计，要匹配，否则晶体不起振。</p></li>
 <li><p>RTC时钟，红框2处即是，频率是32.768M。</p></li>
 <li><p>复位电路，红框3处即是。用于复位CPU，通常是低电平复位。</p>
 <p>上电时，阻容电路没充电，复位脚是低电平，CPU进行复位，电容充满电后，复位脚是高电平，CPU复位完成。这就是常说的上电复位过程。</p>
 <p>正常工作中，按下按键，将复位脚拉低到低电平，进行复位。</p>
 </li>
 <li><p>启动选择电路，红框6就是STM32的启动选择电路。</p></li>
-<li><p>调试口，红框7处就是调试口。什么是调试？通过电脑上的工具调试芯片。</p></li>
+<li><p>调试口，红框7处就是调试口。什么是调试？通过电脑上的工具调试芯片。也就是我们常说的用JLINK通过JTAG口调试。现在，已经慢慢换成Daplink+SW口了，因为SW口用的线更少，更方便。</p></li>
 </ul>
 <p>实际上，一个单片机，只需要：<code class="docutils literal notranslate"><span class="pre">主电源</span></code>、<code class="docutils literal notranslate"><span class="pre">主时钟</span></code>、<code class="docutils literal notranslate"><span class="pre">复位电路</span></code>，<code class="docutils literal notranslate"><span class="pre">驱动选择电路</span></code>， 芯片就能运行了。</p>
 <p>很多芯片甚至不需要主时钟，使用芯片内部的时钟就可以运行代码。STM32也有内部时钟，只不过，相对外部晶振来说，内部时钟的精度会差很多。</p>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">3.2.2. </span>硬件最小系统<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>我们看下硬件实物的最小系统。</p>
+<p><img alt="../_images/B02_yjzxxt.jpg" src="../_images/B02_yjzxxt.jpg" /></p>
+<ol class="simple">
+<li><p>红框1，是复位电路，按下复位按键系统就复位了。</p></li>
+<li><p>红框2，是电源电路，将外部的5V转换为3.3V。</p></li>
+<li><p>红框3，是启动选择电路。</p></li>
+<li><p>红框4，是纽扣电池电路。</p></li>
+<li><p>红框5，是主芯片和电源电路，4个电容要靠近芯片电源管脚。</p></li>
+<li><p>红框6，是实时时钟。</p></li>
+<li><p>红框7，是主时钟，8M频率。</p></li>
+<li><p>红框8，是模拟电源。</p></li>
+</ol>
 <hr class="docutils" />
-<p>20200101</p>
+<p>20200104</p>
 <p>end</p>
+</div>
 </div>
 </div>
 

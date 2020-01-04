@@ -84,6 +84,7 @@
               <p class="caption"><span class="caption-text">关于本项目</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">目录说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#doc">DOC目录文档说明</a></li>
 </ul>
 <p class="caption"><span class="caption-text">产品说明</span></p>
 <ul class="current">
@@ -110,6 +111,30 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../base/00前言.html">1. 前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../base/01资料介绍.html">2. 资料介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/02单片机最小系统说明.html">3. 最小系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/3建立工程/建立工程.html">4. 建立工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/4点亮led/led.html">5. IO&amp;点亮LED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/05开发工具.html">6. 提高效率的工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/6点亮数码管/seg1.html">7. 点亮数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/8动态扫描数码管/seg8.html">9. 动态扫描数码管</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/9源码结构整理/str.html">10. 良好代码架构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/10按键扫描/io_key.html">11. IO输入与按键扫描</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/11外部中断/exit.html">12. 外部中断与按键触发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/12定时器/timer.html">13. 定时器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/13PWM蜂鸣器/Pwm.html">14. PWM输出与蜂鸣器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/14串口与调试信息/uart.html">15. 串口与调试信息输出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/15_ADC/ADC.html">16. ADC模数转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/16_DAC/dac.html">17. DAC数模转换</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/17_RTC/RTC.html">18. 时钟和日历</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/18_I2C_EERROM/i2c.html">19. I2C与EEPROM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/19_SPI_FLASH/spi.html">20. SPI与SPI FLASH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/20_I2C_OLED/oled.html">21. OLED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/21_SPI_COG/cog.html">22. SPI控制COG LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/22_FSMC_TFT/FSMC.html">23. FSMC与TFT LCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/23_VSPI_tslib_TP/tp.html">24. 触摸屏与Tslib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/24_SDIO/sdio.html">25. SDIO通信</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/25_USB/USB.html">26. USB</a></li>
 </ul>
 <p class="caption"><span class="caption-text">提高教程</span></p>
 <ul>
@@ -209,7 +234,7 @@
 </div>
 <div class="section" id="id4">
 <h2>模块说明<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
-<p><img alt="../_images/spec_pic1.png" src="../_images/spec_pic1.png" /></p>
+<p><img alt="../_images/spec_pic1.jpg" src="../_images/spec_pic1.jpg" /></p>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -373,32 +398,32 @@
 <h3>COM口<a class="headerlink" href="#com" title="永久链接至标题">¶</a></h3>
 <p>配套有一根DB9公头灰排线，接线端子一端，红色为1脚，对应接开发板1脚。1脚无线，对应接无插针位置。</p>
 <p>接法如下图</p>
-<p><img alt="../_images/pic3.jpg" src="../_images/pic3.jpg" /></p>
+<p><img alt="../_images/pic3.JPG" src="../_images/pic3.JPG" /></p>
 </div>
 <div class="section" id="id6">
 <h3>纽扣电池<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
 <p>纽扣电池通过插座连接，兼容电脑主板电池。红线为正极，接座子丝印+极。</p>
 <p>接法如下图</p>
-<p><img alt="../_images/pic4.jpg" src="../_images/pic4.jpg" /></p>
+<p><img alt="../_images/pic4.JPG" src="../_images/pic4.JPG" /></p>
 </div>
 <div class="section" id="cog-lcd">
 <h3>cog lcd<a class="headerlink" href="#cog-lcd" title="永久链接至标题">¶</a></h3>
 <p>cog lcd可直接插到外扩的SPI接口，使用硬件SPI控制器控制。也可以接到外扩GPIO，使用IO模拟SPI。</p>
 <p>LCD方向朝下，注意看电源与地即可。</p>
 <p>接法如下图</p>
-<p><img alt="../_images/pic5.jpg" src="../_images/pic5.jpg" /></p>
+<p><img alt="../_images/pic5.JPG" src="../_images/pic5.JPG" /></p>
 </div>
 <div class="section" id="wifi">
 <h3>WIFI模块<a class="headerlink" href="#wifi" title="永久链接至标题">¶</a></h3>
 <p>外扩串口兼容安信可WIFI模块，模组朝上插。</p>
 <p>接法如下图</p>
-<p><img alt="../_images/pic6.jpg" src="../_images/pic6.jpg" /></p>
+<p><img alt="../_images/pic6.JPG" src="../_images/pic6.JPG" /></p>
 </div>
 <div class="section" id="oled-i2c">
 <h3>OLED(I2C)<a class="headerlink" href="#oled-i2c" title="永久链接至标题">¶</a></h3>
 <p>外扩I2C接口可接屋脊雀OLED LCD模组。方向朝下。</p>
 <p>接法如下图</p>
-<p><img alt="../_images/pic7.jpg" src="../_images/pic7.jpg" /></p>
+<p><img alt="../_images/pic7.JPG" src="../_images/pic7.JPG" /></p>
 </div>
 <div class="section" id="oled-spi">
 <h3>OLED(spi)<a class="headerlink" href="#oled-spi" title="永久链接至标题">¶</a></h3>
@@ -409,7 +434,7 @@
 <h3>TFT LCD<a class="headerlink" href="#tft-lcd" title="永久链接至标题">¶</a></h3>
 <p>屋脊雀TFT LCD使用FPC排线连接，开发板和模组的连接座皆是翻盖下接，也即是排线的金手指朝下。</p>
 <p>接法如下图</p>
-<p><img alt="../_images/pic8.jpg" src="../_images/pic8.jpg" /></p>
+<p><img alt="../_images/pic8.JPG" src="../_images/pic8.JPG" /></p>
 </div>
 <div class="section" id="boot">
 <h3>BOOT选择<a class="headerlink" href="#boot" title="永久链接至标题">¶</a></h3>
