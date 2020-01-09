@@ -84,7 +84,7 @@
               <p class="caption"><span class="caption-text">关于本项目</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">目录说明</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../README.html#id2">文档说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#doc">DOC目录文档说明</a></li>
 </ul>
 <p class="caption"><span class="caption-text">产品说明</span></p>
 <ul>
@@ -95,7 +95,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../00前言.html">1. 前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01资料介绍.html">2. 资料介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../02单片机最小系统说明.html">3. 最小系统</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 建立工程</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 建立工程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">4.1. 安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.1.1. 下载</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../4点亮led/led.html">5. IO&amp;点亮LED</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05开发工具.html">6. 提高效率的工具</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../6点亮数码管/seg1.html">7. 点亮数码管</a></li>
@@ -193,27 +199,96 @@
             
   <div class="section" id="id1">
 <h1><span class="section-number">4. </span>建立工程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>创建好一个空的工程。</p>
-<p>从库拷贝需要的文件。</p>
-<p>建立一个mcu文件夹。
-把STM32F10x_StdPeriph_Lib_V3.5.0\Libraries下的STM32F10x_StdPeriph_Driver文件夹拷贝到mcu目录
+<p>本章节教大家创建一个STM32的工程。</p>
+<p>开发环境使用MDK，也即是Keil。</p>
+<p><strong>本文档只做概要说明，详细操作请参考视频教程</strong></p>
+<div class="section" id="id2">
+<h2><span class="section-number">4.1. </span>安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>自己网上寻找安装方法。</p>
+<p>安装完成后，双击图标打开主界面如下。</p>
+<p><img alt="../../_images/b03_01.png" src="../../_images/b03_01.png" /></p>
+<p>点击菜单栏的<code class="docutils literal notranslate"><span class="pre">Help</span></code>-&gt;<code class="docutils literal notranslate"><span class="pre">About</span> <span class="pre">uVision</span></code>，可以查看到版本信息，我使用的是V5.24.2.0。</p>
+<p><img alt="../../_images/b03_02.png" src="../../_images/b03_02.png" /></p>
+<p>创建工程之前我们先配置IDE环境，</p>
+<p><img alt="../../_images/b03_03.png" src="../../_images/b03_03.png" /></p>
+<p>在<code class="docutils literal notranslate"><span class="pre">Configuration</span></code>的<code class="docutils literal notranslate"><span class="pre">Editor</span></code>页中，把<code class="docutils literal notranslate"><span class="pre">Automatic</span> <span class="pre">reload</span> <span class="pre">of</span> <span class="pre">externally</span> <span class="pre">modified</span> <span class="pre">files</span></code></p>
+<p><img alt="../../_images/b03_04.png" src="../../_images/b03_04.png" /></p>
+<p>点击<code class="docutils literal notranslate"><span class="pre">Project</span></code>中的<code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">uVision</span> <span class="pre">Project</span></code> 创建新工程</p>
+<p><img alt="../../_images/b03_05.png" src="../../_images/b03_05.png" /></p>
+<p>选择芯片STM32F103VE</p>
+<blockquote>
+<div><p>如果MDK是刚刚装好，在芯片中只有ARM内核，没有我们需要的芯片。</p>
+<p>直接双击ARM核，选择下载芯片列表。</p>
+<p>同时还需要下载对应芯片的支持包。 <strong>待补充</strong></p>
+</div></blockquote>
+<p><img alt="../../_images/b03_06.png" src="../../_images/b03_06.png" /></p>
+<p>弹出界面让我们选择软件包，我们都不是使用这些软件库。点击OK跳过。</p>
+<p><img alt="../../_images/b03_07.png" src="../../_images/b03_07.png" /></p>
+<p>创建完成，现在得到一个空的工程。</p>
+<p><img alt="../../_images/b03_08.png" src="../../_images/b03_08.png" /></p>
+<p>查看目录，现在只有工程文件，没有代码文件。</p>
+<p><img alt="../../_images/b03_09.png" src="../../_images/b03_09.png" /></p>
+<p>在目录中创建一个<code class="docutils literal notranslate"><span class="pre">mcu</span></code>文件夹。</p>
+<p>把STM32F10x_StdPeriph_Lib_V3.5.0\Libraries下的STM32F10x_StdPeriph_Driver文件夹拷贝到mcu目录
 名字太长，改为stdlib</p>
 <p>拷贝STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_Examples\GPIO\IOToggle 中的文件到mcu目录</p>
 <p>拷贝STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x 中的源文件
 拷贝启动代码，注意选对编译工具和型号
 STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm</p>
-<p>拷贝完后，还需要添加到工程
-先选中目标名，再单击，修改为stm32_tech
-同样修改源文件目录名
-添加文件，添加启动代码的时候要注意
-新建一个Stlib的文件夹，把库文件全部添加</p>
-<p>尝试编译
-错误说明</p>
-<p>工程配置</p>
-<p>不建议在工程中定义宏</p>
-<p>添加头文件</p>
-<p>编译 错误</p>
-<p>定义型号 使用标准库，要修改文件属性为可写才能修改</p>
+<p><strong>待补充</strong></p>
+<p><img alt="../../_images/b03_10.png" src="../../_images/b03_10.png" /></p>
+<p>回到MDK</p>
+<p>先选中目标名，再单击，修改为<code class="docutils literal notranslate"><span class="pre">stm32_tech</span></code>
+同样修改源文件目录名</p>
+<p>然后右键点击<code class="docutils literal notranslate"><span class="pre">mcu</span></code>，将刚刚拷贝到<code class="docutils literal notranslate"><span class="pre">mcu</span></code>目录的文件添加到工程的<code class="docutils literal notranslate"><span class="pre">mcu</span></code>下。</p>
+<p><img alt="../../_images/b03_11.png" src="../../_images/b03_11.png" /></p>
+<p>添加文件，添加启动代码的时候要注意，文件类型要选为ALL，才能看到<strong>汇编文件</strong>。</p>
+<p><img alt="../../_images/b03_12.png" src="../../_images/b03_12.png" /></p>
+<p><img alt="../../_images/b03_13.png" src="../../_images/b03_13.png" /></p>
+<p>新建一个Stlib的文件夹，把库文件全部添加</p>
+<p><img alt="../../_images/b03_14.png" src="../../_images/b03_14.png" /></p>
+<p>点击编译，在下方框中输出编译过程的信息，编译结果显示24个错误。错误都是提示找不到.h文件。</p>
+<p>原因是我们没有添加头文件存放的路径。</p>
+<p><img alt="../../_images/b03_15.png" src="../../_images/b03_15.png" /></p>
+<p>点击魔术棒进入Option，开始配置工程。</p>
+<p>首先将晶振修改为8M</p>
+<p><img alt="../../_images/b03_16.png" src="../../_images/b03_16.png" /></p>
+<p>在Output页中勾选如下，选择生成hex文件。</p>
+<p><img alt="../../_images/b03_17.png" src="../../_images/b03_17.png" /></p>
+<p>在C/C++页中，勾选上C99，并且将头文件存在的路径添加到Include Paths中。</p>
+<p><img alt="../../_images/b03_18.png" src="../../_images/b03_18.png" /></p>
+<p>点击工程目录树中，找到stm32f10x.h，在65开始的地方，默认没有定义任何类型的芯片，我们要定义一个芯片。</p>
+<blockquote>
+<div><p>有些库文件时只读，在图标上面有一个钥匙标志，需要先修改文件属性才能修改。</p>
+</div></blockquote>
+<p><img alt="../../_images/b03_19.png" src="../../_images/b03_19.png" /></p>
+<p>在这个文件的105行，打开这个宏，选择使用标准库。</p>
+<p><img alt="../../_images/b03_20.png" src="../../_images/b03_20.png" /></p>
+<p>编译，错误，原因是我们没有忘记添加启动文件了。</p>
+<p><img alt="../../_images/b03_22.png" src="../../_images/b03_22.png" /></p>
+<p>添加启动文件，文件类型要选择为ALL files才能选中汇编文件。</p>
+<p><img alt="../../_images/b03_21.png" src="../../_images/b03_21.png" /></p>
+<p>编译通过。</p>
+<p><img alt="../../_images/b03_23.png" src="../../_images/b03_23.png" /></p>
+<div class="section" id="id3">
+<h3><span class="section-number">4.1.1. </span>下载<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>在工程Option中，Debug页，右上角，选择调试器，默认是ULINK2……，我们选在CMSIS-DAP。</p>
+<p><img alt="../../_images/b03_24.png" src="../../_images/b03_24.png" /></p>
+<p>硬件连接正确的情况下，点击Settings，可以读到芯片。</p>
+<p><img alt="../../_images/b03_25.png" src="../../_images/b03_25.png" /></p>
+<p>回到主界面，点击Debug，开始调试。</p>
+<p><img alt="../../_images/b03_26.png" src="../../_images/b03_26.png" /></p>
+<p>进入调试后界面如下。</p>
+<p><img alt="../../_images/b03_27.png" src="../../_images/b03_27.png" /></p>
+<p>左键点击行号旁边可以添加断点，黄色三角符号是当前执行位置。</p>
+<p><img alt="../../_images/b03_28.png" src="../../_images/b03_28.png" /></p>
+<p>各种调试按钮在菜单栏。</p>
+<p><img alt="../../_images/b03_29.png" src="../../_images/b03_29.png" /></p>
+<hr class="docutils" />
+<p>20200109</p>
+<p>end</p>
+</div>
+</div>
 </div>
 
 
