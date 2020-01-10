@@ -10,7 +10,7 @@
 
   在github上托管的仅仅是doc目录。其他资料请从百度云下载。
 
-* gitee镜像：
+* gitee镜像：<https://gitee.com/hokgaai/stm32_tech>
 
 * 文档同步发布在：<https://stm32-tech.readthedocs.io/zh_CN/latest/>
 
