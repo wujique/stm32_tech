@@ -35,8 +35,6 @@
 
 所有文档使用**Sphinx**管理。
 
-`doc\source`目录下的md文件为文档源文件。包含`Advanced`、`base`、`spec`等子目录的文件。
-
 md文件经过sphinx处理后，生成html文件。文件入口在`doc\build\html`中的`index.html`，使用浏览器打开即可浏览所有文档。
 
 sphinx可以将文档处理为pdf，如有需要，可自行转换。
