@@ -14,6 +14,8 @@
 
 * 文档同步发布在：<https://stm32-tech.readthedocs.io/zh_CN/latest/>
 
+* 视频教程：https://www.bilibili.com/video/av83166106?pop_share=1
+
 #### 目录说明
 
 本工程包含代码、资料、文档，目录说明如下。
