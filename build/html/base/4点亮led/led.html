@@ -84,7 +84,7 @@
               <p class="caption"><span class="caption-text">关于本项目</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">目录说明</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../README.html#id2">文档说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#doc">DOC目录文档说明</a></li>
 </ul>
 <p class="caption"><span class="caption-text">产品说明</span></p>
 <ul>
@@ -96,7 +96,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../01资料介绍.html">2. 资料介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../02单片机最小系统说明.html">3. 最小系统</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../3建立工程/建立工程.html">4. 建立工程</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">5. IO&amp;点亮LED</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. IO&amp;点亮LED</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">5.1. 概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#io">5.2. IO 是什么？</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gpio">5.2.1. GPIO功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">5.2.2. GPIO驱动能力</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stm32-io">5.3. STM32 IO特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#st">5.4. ST库函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#led">5.5. 如何使用LED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">5.6. 编码与调试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">5.7. 作业问题</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../05开发工具.html">6. 提高效率的工具</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../6点亮数码管/seg1.html">7. 点亮数码管</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
@@ -193,21 +206,334 @@
             
   <div class="section" id="io-led">
 <h1><span class="section-number">5. </span>IO&amp;点亮LED<a class="headerlink" href="#io-led" title="永久链接至标题">¶</a></h1>
-<p>IO 是什么？</p>
-<p>STM32的IO是什么？</p>
-<p>LED 是啥？如何控制发光？</p>
-<p>原理图说明</p>
-<p>如何编写代码？</p>
-<p>对原理图 找到对应的IO</p>
-<p>PE15 PD8 PD9 PD10</p>
-<p>要记得打开外设时钟</p>
-<p>第一次试验 还没设置IO口，知识初始化 就亮了， 为什么？
-第二次试验 先设置输入输出的值，在初始化IO口
-第三次试验 无延时的流水灯， 先单步 在全速，全速有什么区别？亮度没那么亮了？</p>
-<p>十进制  十六进制的数值定义。
-加延时  关键字 volatile</p>
-<p>C 语言知识点 宏定义</p>
+<div class="section" id="id1">
+<h2><span class="section-number">5.1. </span>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>芯片如何控制外部电路？</p>
+<p>从本课开始，让我们一点一点把单片机系统的知识框架搭建起来。</p>
+<p>本课，学习最简单的、也是最基本的：IO口。</p>
+<p>本课讲以下几个问题：</p>
+<ol class="simple">
+<li><p>IO是什么？</p></li>
+<li><p>STM32的IO有什么特点。</p></li>
+<li><p>LED如何使用？</p></li>
+<li><p>编码和调试过程（这段看视频更好）</p></li>
+</ol>
+</div>
+<div class="section" id="io">
+<h2><span class="section-number">5.2. </span>IO 是什么？<a class="headerlink" href="#io" title="永久链接至标题">¶</a></h2>
+<p>IO是Input&amp;Output，也就是输入和输出。</p>
+<p>我们选的STM32103这款芯片的，管脚总共有100根。</p>
+<p>但是《STM32F103数据手册.pdf》中有写：IO口只有88，为什么？</p>
+<p><img alt="../../_images/b04_01.png" src="../../_images/b04_01.png" /></p>
+<p>在数据手册的第14页有管脚定义图，如下：</p>
+<p><img alt="../../_images/b04_02.png" src="../../_images/b04_02.png" /></p>
+<p>从管脚名称看到，名称是P前缀的的管脚， 就是IO口。100脚的STM32，有PA、PB、PC、PD、PE，一共5组</p>
+<p>除了IO，还有电源和地、晶振输入、BOOT配置等其他功能的管脚。</p>
+<blockquote>
+<div><ol class="simple">
+<li><p>普通电源有5组。</p></li>
+<li><p>模拟电源有1组。</p></li>
+<li><p>备份电源一组。</p></li>
+<li><p>参考电压VREF有一组。</p></li>
+<li><p>复位脚和启动配置BOOT0各一根管脚。</p></li>
+<li><p>晶振两组，其中RTC晶振可做普通IO使用。</p></li>
+<li><p>73脚是空的，没有连接。</p></li>
+</ol>
+</div></blockquote>
+<p>有些朋友可能有疑问，怎么都没看到SPI、I2C等功能的管脚？</p>
+<p>通常IO口都能复用作其他功能、比如SPI，I2C等。在数据手册的管脚定义中有几页说明管脚可以复用做什么功能。</p>
+<p>比如：</p>
+<p><img alt="../../_images/b04_03.png" src="../../_images/b04_03.png" /></p>
+<blockquote>
+<div><p>PA0，主功能时PA0，可用作串口的CTS，ADC，TIM6，TIM2，TIM8等功能。</p>
+<p>具体功能后面我们会学到。</p>
+</div></blockquote>
+<p>从此可见，我们说IO功能，通常只是一个IO口的基本功能：<strong>GPIO</strong>， 通用输入输出的意思。</p>
+<p>那GPIO是用来做什么的呢？</p>
+<div class="section" id="gpio">
+<h3><span class="section-number">5.2.1. </span>GPIO功能<a class="headerlink" href="#gpio" title="永久链接至标题">¶</a></h3>
+<p>那GPIO到底能用来做什么呢？</p>
+<p>理解这个GPIO之前，先要定下一个概念：</p>
+<p><strong>除了DA转换和AD转换， 其他的IO口都是数字逻辑功能</strong></p>
+<p>那对GPIO来说，功能很简单，分两个：</p>
+<ol class="simple">
+<li><p>输出-在管脚上输出数字逻辑电平。</p></li>
+<li><p>输入-检测管脚的逻辑电平</p></li>
+</ol>
+<blockquote>
+<div><p>芯片用的是TTL电平：</p>
+<p>数字电平有两种，高电平和低电平。</p>
+<p>高电平是逻辑1，低电平是逻辑0.</p>
+<p>高电平通常是芯片工作电压，低电平是就地电压。</p>
+<p><em>实际上呢，高电平和低电平是有一个范围的，并不仅仅是3.3V和0V</em></p>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h3><span class="section-number">5.2.2. </span>GPIO驱动能力<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>一个IO口输出电流或输入电流的能力。</p>
+<p>在中文版数据手册 第31页中，有下面这个表格：</p>
+<p><img alt="../../_images/b04_04.png" src="../../_images/b04_04.png" /></p>
+<blockquote>
+<div><p>灌电流和拉电流都是25mA</p>
+<p>在设计外围电路时，电流不能超过这个值，否则会烧芯片。比如大电流的LCD背光，就需要在外部添加三极管驱动电路。</p>
+<p>还有一个需要注意的，有些芯片，灌电流和拉电流的最大值不一样，灌电流可能只有5ma。</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="stm32-io">
+<h2><span class="section-number">5.3. </span>STM32 IO特点<a class="headerlink" href="#stm32-io" title="永久链接至标题">¶</a></h2>
+<p>以前8051单片机非常简单，只要设置IO口的方向是输出还是输入，就可以工作了。</p>
+<p>这样用起来虽然简单，但是却无法满足各种应用场景。</p>
+<p>因此，高级一点的芯片，IO口通常有很多功能可以配置。</p>
+<p>STM32的GPIO就是这样，如果操作寄存器操作的话，相当复杂。在《STM32F10x微控制器参考手册.pdf》中，第七章就是讲GPIO功能的。</p>
+<p><img alt="../../_images/b04_05.png" src="../../_images/b04_05.png" /></p>
+<ul class="simple">
+<li><p>首先要知道，IO口有8种模式：</p></li>
+</ul>
+<p><img alt="../../_images/b04_06.png" src="../../_images/b04_06.png" /></p>
+<blockquote>
+<div><p><strong>这里要区分输入和输出：浮空、上拉、下拉，都是说输入。推挽、开漏，是输出。</strong></p>
+</div></blockquote>
+<p>我们驱动LED，用的是输出功能。那选推挽还是开漏模式呢？那就要先搞清楚推挽和开漏输出的区别。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th></th>
+<th>推挽</th>
+<th>开漏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>高电平驱动能力</td>
+<td>强</td>
+<td>外部上拉电阻提供</td>
+</tr>
+<tr>
+<td>低电平驱动能力</td>
+<td>强</td>
+<td>强</td>
+</tr>
+<tr>
+<td>电平转换速度</td>
+<td>快</td>
+<td>外部上拉电阻决定，电阻越小，反应越快，功耗越大</td>
+</tr>
+<tr>
+<td>线与功能</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>电平转换</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+</tbody>
+</table><blockquote>
+<div><ol>
+<li><p>开漏模式，IO口内部没有上拉，没有接MOS管，所以开漏电路不能输出高电平，要输出高电平，需要外部接上拉电阻，如果外部上拉电阻接的电压不是芯片电压，就相当于实现了IO口电平转换功能。</p>
+<p>比如，推挽模式下，IO口输出过电平就是3.3V，用开漏模式，外部接电阻上拉到5V，那么输出高电平就是5V。</p>
+</li>
+<li><p>电平转换速度是说芯片0/1切换的速度。</p></li>
+<li><p>线与，通常用在一些可挂载多设备的总线上，比如I2C。</p></li>
+</ol>
+<p>原理参考：<a class="reference external" href="https://www.cnblogs.com/lweleven/p/mcuioout.html">https://www.cnblogs.com/lweleven/p/mcuioout.html</a></p>
+</div></blockquote>
+<p>因此，用驱动LED，用推挽还是开漏？<strong>除了必须用开漏的场合，我们都习惯用推挽输出</strong></p>
+<ul class="simple">
+<li><p>第二，要知道SMT32的IO有一个速度需要配置。</p></li>
+</ul>
+<p><img alt="../../_images/b04_07.png" src="../../_images/b04_07.png" /></p>
+<p>如果不知道如何选，全部用50M，功能肯定正常。但是可能会增加电流，增加EMC辐射。</p>
+<p>经验：</p>
+<blockquote>
+<div><p>普通功能的IO，通常2M就可以了。</p>
+<p>如果一个IO用作I2C通信，速度通常就10K到400K，选10M就好了。</p>
+<p>如果是用作SPI功能，可能会到20M速度，那就要选50M了。</p>
+</div></blockquote>
+<p>到此，我们基本了解了STM32 GPIO的功能。下面看看ST的库都提供了什么函数给我们用。</p>
+</div>
+<div class="section" id="st">
+<h2><span class="section-number">5.4. </span>ST库函数<a class="headerlink" href="#st" title="永久链接至标题">¶</a></h2>
+<p>打开我们上一节我们创建的工程。在库函数中找到stm32f10x_gpio.c和stm32f10x_gpio.h</p>
+<p>函数有下面这些</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">GPIO_DeInit</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_AFIODeInit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_Init</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="n">GPIO_InitTypeDef</span><span class="o">*</span> <span class="n">GPIO_InitStruct</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_StructInit</span><span class="p">(</span><span class="n">GPIO_InitTypeDef</span><span class="o">*</span> <span class="n">GPIO_InitStruct</span><span class="p">);</span>
+<span class="kt">uint8_t</span> <span class="nf">GPIO_ReadInputDataBit</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">);</span>
+<span class="kt">uint16_t</span> <span class="nf">GPIO_ReadInputData</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">);</span>
+<span class="kt">uint8_t</span> <span class="nf">GPIO_ReadOutputDataBit</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">);</span>
+<span class="kt">uint16_t</span> <span class="nf">GPIO_ReadOutputData</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_SetBits</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_ResetBits</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_WriteBit</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">,</span> <span class="n">BitAction</span> <span class="n">BitVal</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_Write</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">PortVal</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_PinLockConfig</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_EventOutputConfig</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">GPIO_PortSource</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">GPIO_PinSource</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_EventOutputCmd</span><span class="p">(</span><span class="n">FunctionalState</span> <span class="n">NewState</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_PinRemapConfig</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">GPIO_Remap</span><span class="p">,</span> <span class="n">FunctionalState</span> <span class="n">NewState</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_EXTILineConfig</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">GPIO_PortSource</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">GPIO_PinSource</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">GPIO_ETH_MediaInterfaceConfig</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">GPIO_ETH_MediaInterface</span><span class="p">);</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>GPIO_Init：初始化IO口，</p>
+<p>GPIO_SetBits：IO口输出1</p>
+<p>GPIO_ResetBits：IO口输出0</p>
+<p>GPIO_WriteBit：IO口输出状态，相当于GPIO_SetBits和GPIO_ResetBits组合。</p>
+<p>GPIO_Write：输出IO口状态，和GPIO_WriteBit的区别是什么呢？GPIO_WriteBit是在指定的IO口上输出相同的状态，GPIO_Write是在一组IO上输出需要的状态。</p>
+</div></blockquote>
+<p>我们看参数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GPIO_SetBits</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="n">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>将GPIOx这组IO口中，GPIO_Pin指定的IO口，输出高电平。</p>
+<p>GPIO_ResetBits功能和GPIO_SetBits相反。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GPIO_WriteBit</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="n">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">,</span> <span class="n">BitAction</span> <span class="n">BitVal</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>将GPIOx这组IO口中GPIO_Pin指定的IO口设置为BitVal的状态。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GPIO_Write</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="n">uint16_t</span> <span class="n">PortVal</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>将GPIOx这组IO口设置为PortVal的状态。注意，是一次设置一组IO。</p>
+<p>我们在来看看初始化的接口</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="n">GPIO_InitTypeDef</span><span class="o">*</span> <span class="n">GPIO_InitStruct</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>关键是第二个参数，这是一个结构体，定义如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>typedef struct
+{
+  uint16_t GPIO_Pin;             /*!&lt; Specifies the GPIO pins to be configured.
+                                      This parameter can be any value of @ref GPIO_pins_define */
+
+  GPIOSpeed_TypeDef GPIO_Speed;  /*!&lt; Specifies the speed for the selected pins.
+                                      This parameter can be a value of @ref GPIOSpeed_TypeDef */
+
+  GPIOMode_TypeDef GPIO_Mode;    /*!&lt; Specifies the operating mode for the selected pins.
+                                      This parameter can be a value of @ref GPIOMode_TypeDef */
+}GPIO_InitTypeDef;
+</pre></div>
+</div>
+<blockquote>
+<div><p>第1个参数GPIO_Pin指定要配置的IO口。</p>
+<p>第2个参数GPIO_Speed配置IO口速度。</p>
+<p>第3个参数GPIO_Mode配置IO口模式。</p>
+</div></blockquote>
+<p>其中GPIO_Speed和GPIO_Mode类型是<strong>枚举</strong>，如下：</p>
+<ul class="simple">
+<li><p>速度</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span>
+<span class="p">{</span> 
+  <span class="n">GPIO_Speed_10MHz</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">GPIO_Speed_2MHz</span><span class="p">,</span> 
+  <span class="n">GPIO_Speed_50MHz</span>
+<span class="p">}</span><span class="n">GPIOSpeed_TypeDef</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>模式</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span>
+<span class="p">{</span> <span class="n">GPIO_Mode_AIN</span> <span class="o">=</span> <span class="mh">0x0</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_IN_FLOATING</span> <span class="o">=</span> <span class="mh">0x04</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_IPD</span> <span class="o">=</span> <span class="mh">0x28</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_IPU</span> <span class="o">=</span> <span class="mh">0x48</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_Out_OD</span> <span class="o">=</span> <span class="mh">0x14</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_Out_PP</span> <span class="o">=</span> <span class="mh">0x10</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_AF_OD</span> <span class="o">=</span> <span class="mh">0x1C</span><span class="p">,</span>
+  <span class="n">GPIO_Mode_AF_PP</span> <span class="o">=</span> <span class="mh">0x18</span>
+<span class="p">}</span><span class="n">GPIOMode_TypeDef</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>配置IO的时候，选用这里的定义即可。</p>
+<p>我们看下例程，在目录<code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_Examples\GPIO\IOToggle</span></code></p>
+<p>中的main函数，初始化IO口的代码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="cm">/*!&lt; At this stage the microcontroller clock setting is already configured, </span>
+<span class="cm">       this is done through SystemInit() function which is called from startup</span>
+<span class="cm">       file (startup_stm32f10x_xx.s) before to branch to application main.</span>
+<span class="cm">       To reconfigure the default setting of SystemInit() function, refer to</span>
+<span class="cm">       system_stm32f10x.c file</span>
+<span class="cm">     */</span>     
+       
+  <span class="cm">/* GPIOD Periph clock enable */</span>
+  <span class="n">RCC_APB2PeriphClockCmd</span><span class="p">(</span><span class="n">RCC_APB2Periph_GPIOD</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+
+  <span class="cm">/* Configure PD0 and PD2 in output pushpull mode */</span>
+  <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Pin</span> <span class="o">=</span> <span class="n">GPIO_Pin_0</span> <span class="o">|</span> <span class="n">GPIO_Pin_2</span><span class="p">;</span>
+  <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Speed</span> <span class="o">=</span> <span class="n">GPIO_Speed_50MHz</span><span class="p">;</span>
+  <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Mode</span> <span class="o">=</span> <span class="n">GPIO_Mode_Out_PP</span><span class="p">;</span>
+  <span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIOD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+</pre></div>
+</div>
+<blockquote>
+<div><ol class="simple">
+<li><p>调用RCC_APB2PeriphClockCmd函数打开GPIOD时钟。</p></li>
+</ol>
+<p>这个是需要注意的，ST的芯片每个设备都有时钟，使用之前都需要打开。</p>
+<ol class="simple">
+<li><p>GPIO_Pin设置为GPIO_Pin_0 | GPIO_Pin_2， 说明过一次配置两个IO口。</p></li>
+<li><p>速度配置为GPIO_Speed_50MHz， 也就是50M</p></li>
+<li><p>GPIO_Mode设置为GPIO_Mode_Out_PP， 也就是输出推挽模式。</p></li>
+<li><p>调用函数GPIO_Init进行配置。</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="led">
+<h2><span class="section-number">5.5. </span>如何使用LED<a class="headerlink" href="#led" title="永久链接至标题">¶</a></h2>
+<p>LED是什么？</p>
+<blockquote>
+<div><p>发光二极管简称为LED。因化学性质又分有机发光二极管OLED和无机发光二极管LED。</p>
+<p>它本质上是一个二极管。所以就有正负极。</p>
+<p>加上电压就会亮，但是，LED其实是一个电流器件，有电流了才会亮。</p>
+<p>电流越大，亮度越大，但是不能超过规格。</p>
+</div></blockquote>
+<p>在资料文件夹内有一个发光二极管的规格书。LED的规格书中有一个很重要的参数。 《黄绿 0603 (33_40mcd)_PDF_C2289_2015-07-23.pdf》</p>
+<p><img alt="../../_images/b04_08.png" src="../../_images/b04_08.png" /></p>
+<p>第1行，顺向电流，就是LED的工作电流，不能超过20mA</p>
+<p>LED电路原理图如下：</p>
+<p><img alt="../../_images/b04_09.png" src="../../_images/b04_09.png" /></p>
+<p>一共4个LED，正极通过一个限流电阻接到VCC3V3，也就是高电平。负极接到IO口。</p>
+<p>当IO口输出低电平，LED就会发光。</p>
+<p>限流电阻就是防止流过LED的电流大于它的顺向电流最大值。</p>
+<p>电流的计算可以粗略如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>I=（3.3-0.6）/1K = 2.7mA
+</pre></div>
+</div>
+<p>这个电路的接法，电流是流入IO口的，就是灌电流。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">5.6. </span>编码与调试<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p><strong>请看视频，文档待补充</strong></p>
+<ol class="simple">
+<li><p>对原理图 找到对应的IO, PE15 PD8 PD9 PD10</p></li>
+<li><p>拷贝例程初始化代码，修改为我们的IO口。</p></li>
+<li><p>单步运行，发现 还没设置IO口，只是初始化 就亮了， 为什么？</p></li>
+<li><p>修改，先设置输入输出的值，再初始化IO口。</p></li>
+<li><p>写流水灯，无延时， 单步运行，流水灯功能正常。全速，没有出现流水，但是亮度变暗了。为什么？</p></li>
+</ol>
+<blockquote>
+<div><p>讲程序，简一点C语言的编码知识。</p>
+<p>十进制  十六进制的数值定义。</p>
+<p>加延时  关键字 volatile</p>
+<p>C 语言知识点: 宏定义</p>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">5.7. </span>作业问题<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>问题， 为什么代码能控制IO口？</p>
+<blockquote>
+<div><p>看库函数到底做了什么</p>
+</div></blockquote>
+<hr class="docutils" />
+<p>END</p>
+<p>20200120</p>
+</div>
 </div>
 
 

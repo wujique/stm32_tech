@@ -96,10 +96,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../01资料介绍.html">2. 资料介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../02单片机最小系统说明.html">3. 最小系统</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. 建立工程</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">4.1. 安装</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">4.1.1. 下载</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#mdk">4.1. 安装MDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">4.2. 安装芯片支持包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">4.3. 创建工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">4.4. 下载</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4点亮led/led.html">5. IO&amp;点亮LED</a></li>
@@ -202,9 +202,30 @@
 <p>本章节教大家创建一个STM32的工程。</p>
 <p>开发环境使用MDK，也即是Keil。</p>
 <p><strong>本文档只做概要说明，详细操作请参考视频教程</strong></p>
-<div class="section" id="id2">
-<h2><span class="section-number">4.1. </span>安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="mdk">
+<h2><span class="section-number">4.1. </span>安装MDK<a class="headerlink" href="#mdk" title="永久链接至标题">¶</a></h2>
 <p>自己网上寻找安装方法。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">4.2. </span>安装芯片支持包<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在创建工程之前，需要先安装芯片支持包，否则在芯片中找不到我们需要的型号。</p>
+<p>按照下图打开Pack安装页面</p>
+<p><img alt="../../_images/b03_30.jpg" src="../../_images/b03_30.jpg" /></p>
+<p>在左边的Devices  中找到我们要的芯片系列，左键点击选中。</p>
+<p><img alt="../../_images/b03_31.jpg" src="../../_images/b03_31.jpg" /></p>
+<p>右边就会显示对应的支持包，我们只需要安装基础包。也就是第二行的，截图是我的电脑，已经安装好了。</p>
+<p>没安装时和其他PACK一样显示Install，点击Install按钮就可以下载安装。</p>
+<p><img alt="../../_images/b03_32.jpg" src="../../_images/b03_32.jpg" /></p>
+<p>在底部的左边有安装信息，右边有安装进度。‘</p>
+<p><img alt="../../_images/b03_33.jpg" src="../../_images/b03_33.jpg" /></p>
+<p><img alt="../../_images/b03_34.jpg" src="../../_images/b03_34.jpg" /></p>
+<p>直接下载速度较慢，而且经常会断开。</p>
+<p>我们可以直接导入下载好的pack文件， 在我们共享的资料中，<code class="docutils literal notranslate"><span class="pre">ref\4</span>&#160; <span class="pre">mdk</span></code>目录下的<code class="docutils literal notranslate"><span class="pre">Keil.STM32F1xx_DFP.2.3.0.pack</span></code>文件就是F103的支持包。</p>
+<p>点击<code class="docutils literal notranslate"><span class="pre">File</span></code>菜单中的<code class="docutils literal notranslate"><span class="pre">Import</span></code>，选择pack文件即可导入。</p>
+<p><img alt="../../_images/b03_35.jpg" src="../../_images/b03_35.jpg" /></p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">4.3. </span>创建工程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>安装完成后，双击图标打开主界面如下。</p>
 <p><img alt="../../_images/b03_01.png" src="../../_images/b03_01.png" /></p>
 <p>点击菜单栏的<code class="docutils literal notranslate"><span class="pre">Help</span></code>-&gt;<code class="docutils literal notranslate"><span class="pre">About</span> <span class="pre">uVision</span></code>，可以查看到版本信息，我使用的是V5.24.2.0。</p>
@@ -216,11 +237,6 @@
 <p>点击<code class="docutils literal notranslate"><span class="pre">Project</span></code>中的<code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">uVision</span> <span class="pre">Project</span></code> 创建新工程</p>
 <p><img alt="../../_images/b03_05.png" src="../../_images/b03_05.png" /></p>
 <p>选择芯片STM32F103VE</p>
-<blockquote>
-<div><p>如果MDK是刚刚装好，在芯片中只有ARM内核，没有我们需要的芯片。</p>
-<p>直接双击ARM核，选择下载芯片列表。</p>
-<p>同时还需要下载对应芯片的支持包。 <strong>待补充</strong></p>
-</div></blockquote>
 <p><img alt="../../_images/b03_06.png" src="../../_images/b03_06.png" /></p>
 <p>弹出界面让我们选择软件包，我们都不是使用这些软件库。点击OK跳过。</p>
 <p><img alt="../../_images/b03_07.png" src="../../_images/b03_07.png" /></p>
@@ -229,12 +245,12 @@
 <p>查看目录，现在只有工程文件，没有代码文件。</p>
 <p><img alt="../../_images/b03_09.png" src="../../_images/b03_09.png" /></p>
 <p>在目录中创建一个<code class="docutils literal notranslate"><span class="pre">mcu</span></code>文件夹。</p>
-<p>把STM32F10x_StdPeriph_Lib_V3.5.0\Libraries下的STM32F10x_StdPeriph_Driver文件夹拷贝到mcu目录
-名字太长，改为stdlib</p>
-<p>拷贝STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_Examples\GPIO\IOToggle 中的文件到mcu目录</p>
-<p>拷贝STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x 中的源文件
+<p>把<code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Lib_V3.5.0\Libraries下的STM32F10x_StdPeriph_Driver</span></code>文件夹拷贝到<code class="docutils literal notranslate"><span class="pre">mcu</span></code>目录
+名字太长，改为<code class="docutils literal notranslate"><span class="pre">stdlib</span></code></p>
+<p>拷贝<code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Lib_V3.5.0\Project\STM32F10x_StdPeriph_Examples\GPIO\IOToggle</span></code> 中的文件到<code class="docutils literal notranslate"><span class="pre">mcu</span></code>目录</p>
+<p>拷贝<code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x</span></code> 中的源文件
 拷贝启动代码，注意选对编译工具和型号
-STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm</p>
+<code class="docutils literal notranslate"><span class="pre">STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm</span></code></p>
 <p><strong>待补充</strong></p>
 <p><img alt="../../_images/b03_10.png" src="../../_images/b03_10.png" /></p>
 <p>回到MDK</p>
@@ -270,8 +286,9 @@ STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\st
 <p><img alt="../../_images/b03_21.png" src="../../_images/b03_21.png" /></p>
 <p>编译通过。</p>
 <p><img alt="../../_images/b03_23.png" src="../../_images/b03_23.png" /></p>
-<div class="section" id="id3">
-<h3><span class="section-number">4.1.1. </span>下载<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">4.4. </span>下载<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>在工程Option中，Debug页，右上角，选择调试器，默认是ULINK2……，我们选在CMSIS-DAP。</p>
 <p><img alt="../../_images/b03_24.png" src="../../_images/b03_24.png" /></p>
 <p>硬件连接正确的情况下，点击Settings，可以读到芯片。</p>
@@ -285,9 +302,8 @@ STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\st
 <p>各种调试按钮在菜单栏。</p>
 <p><img alt="../../_images/b03_29.png" src="../../_images/b03_29.png" /></p>
 <hr class="docutils" />
-<p>20200109</p>
+<p>20200114</p>
 <p>end</p>
-</div>
 </div>
 </div>
 

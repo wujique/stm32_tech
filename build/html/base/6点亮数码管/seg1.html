@@ -84,7 +84,7 @@
               <p class="caption"><span class="caption-text">关于本项目</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">目录说明</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../README.html#id2">文档说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#doc">DOC目录文档说明</a></li>
 </ul>
 <p class="caption"><span class="caption-text">产品说明</span></p>
 <ul>
@@ -98,7 +98,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../3建立工程/建立工程.html">4. 建立工程</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../4点亮led/led.html">5. IO&amp;点亮LED</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../05开发工具.html">6. 提高效率的工具</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 点亮数码管</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 点亮数码管</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">7.1. 什么是数码管</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">7.2. 原理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">7.3. 编码调试</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../7程序的各种要素/prog.html">8. 程序各种要素说明</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../8动态扫描数码管/seg8.html">9. 动态扫描数码管</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../9源码结构整理/str.html">10. 良好代码架构</a></li>
@@ -193,10 +198,23 @@
             
   <div class="section" id="id1">
 <h1><span class="section-number">7. </span>点亮数码管<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>数码管是什么？其实就是8个LED</p>
-<p>画图展示 8个LED，需要8个IO控制，LED是低电平驱动， 数码管就是高电平驱动。</p>
+<p>本节课利用已经学习的LED知识去控制一个8位数码管。</p>
+<p>本节的原理比较简单。不需要多少时间讲。更多时间是跟大家一起编码调试，从中学习一些编码思路和学习方法。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">7.1. </span>什么是数码管<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>数码管是什么？其实就是8个LED。</p>
+<p>数码管有共阴极和共阳极之分</p>
+<p>共阴极，就是8个LED的负极接在一起。</p>
+<p>共阳极就是8个LED的正极接在一起。</p>
+<p>截图LED产品说明图。</p>
+<p>我们选用的是共阴极数码管，那么就是高电平电量，也就是拉电流驱动。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.2. </span>原理图<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>PE7—PE14</p>
-<p>单步运行 测试数码管能不能亮  数码管太亮了，限流电阻要换。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.3. </span>编码调试<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>如何显示数字？大家都能想到</p>
 <p>我们封装为函数， 有没有更方便的方法？</p>
 <p>都是1个BIT一个BIT的控制，能不能一次输出？</p>
@@ -205,6 +223,9 @@
 <p>解决影响其他IO问题， 先读回来，改写想要改写的位，再写出去。</p>
 <p>还能不能优化？</p>
 <p>把点的操作合进来。</p>
+<hr class="docutils" />
+<p>END</p>
+</div>
 </div>
 
 
