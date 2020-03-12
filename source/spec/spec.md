@@ -86,7 +86,7 @@ VET为100脚封装，充足IO，减少IO复用，增加了外扩接口功能。�
 
 接法如下图
 
-![](pic/pic2.jpg)
+![][2]
 
 #### COM口
 
@@ -167,11 +167,11 @@ BOOT0=1，BOOT1=1，运行在RAM。
 **end**
 
 [1]: pic/pic1.jpg
-[2]: pic/pic2.jpg
-[3]: pic/pic3.jpg
-[4]: pic/pic4.jpg
-[5]: pic/pic5.jpg
-[6]: pic/pic6.jpg
-[7]: pic/pic7.jpg
-[8]: pic/pic8.jpg
+[2]: pic/pic2.JPG
+[3]: pic/pic3.JPG
+[4]: pic/pic4.JPG
+[5]: pic/pic5.JPG
+[6]: pic/pic6.JPG
+[7]: pic/pic7.JPG
+[8]: pic/pic8.JPG
 
