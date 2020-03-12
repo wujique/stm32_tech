@@ -21,11 +21,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -495,10 +495,12 @@
 </div></blockquote>
 <p>在资料文件夹内有一个发光二极管的规格书。LED的规格书中有一个很重要的参数。 《黄绿 0603 (33_40mcd)_PDF_C2289_2015-07-23.pdf》</p>
 <p><img alt="../../_images/b04_08.png" src="../../_images/b04_08.png" /></p>
-<p>第1行，顺向电流，就是LED的工作电流，不能超过20mA</p>
-<p>LED电路原理图如下：</p>
+<p>第1行，顺向电流，就是LED的工作电流，不能超过20mA。</p>
+<p>LED驱动有两种方式：低电平（灌电流）和高电平（拉电流），如下图</p>
+<p><img alt="../../_images/b04_10.png" src="../../_images/b04_10.png" /></p>
+<p>我们的板子选用灌电流模式，4位LED电路原理图如下：</p>
 <p><img alt="../../_images/b04_09.png" src="../../_images/b04_09.png" /></p>
-<p>一共4个LED，正极通过一个限流电阻接到VCC3V3，也就是高电平。负极接到IO口。</p>
+<p>LED正极通过一个限流电阻接到VCC3V3，也就是高电平。负极接到IO口。</p>
 <p>当IO口输出低电平，LED就会发光。</p>
 <p>限流电阻就是防止流过LED的电流大于它的顺向电流最大值。</p>
 <p>电流的计算可以粗略如下：</p>

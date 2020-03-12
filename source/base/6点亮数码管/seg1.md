@@ -396,7 +396,7 @@ void seg_display(char num, char dot)
    		GPIO_Write(GPIOE, tmp);
    ```
 
-   
+   > 本文档没列出所有代码，请查看例程代码获取完整版本。
 
 ---
 
