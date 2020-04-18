@@ -184,19 +184,196 @@ void seg_display(char num, char dot)
 
 ### 编译结果如何看？
 
+1. 在IDE界面有编译过程和最终结果：
 
+```
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_spi.c...
+compiling stm32f10x_tim.c...
+compiling main.c...
+compiling stm32f10x_wwdg.c...
+linking...
+Program Size: Code=1336 RO-data=336 RW-data=24 ZI-data=1632  
+FromELF: creating hex file...
+".\Objects\stm32_tech.axf" - 0 Error(s), 0 Warning(s).
+Build Time Elapsed:  00:00:19
+```
 
+> Program Size: Code=1336 RO-data=336 RW-data=24 ZI-data=1632  
+>
+> 这一句说明生成的目标文件大小，代码1336字节，RO（只读变量）336字节，RW（读写变量）24字节，ZI数据1632字节。
 
+2. 更细的情况，可以通过map文件查看。map文件在`Listings\`目录下，名字叫`stm32_tech.map`。
+
+   用文件编辑器打开就能看到内容。
+
+   map文件最开始是最细的地方，最后是整体情况。拖到最后，就能看到下面内容：
+
+   ```
+   ==============================================================================
+   
+   
+         Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
+   
+         1336         96        336         24       1632     236688   Grand Totals
+         1336         96        336         24       1632     236688   ELF Image Totals
+         1336         96        336         24          0          0   ROM Totals
+   
+   ==============================================================================
+   
+       Total RO  Size (Code + RO Data)                 1672 (   1.63kB)
+       Total RW  Size (RW Data + ZI Data)              1656 (   1.62kB)
+       Total ROM Size (Code + RO Data + RW Data)       1696 (   1.66kB)
+   
+   ==============================================================================
+   ```
+
+   这些内容跟IDE中看到的基本类似。这是程序的总体情况。有一个地方需要注意：
+
+   > Total RO  Size (Code + RO Data)：
+>
+   > Total RW  Size (RW Data + ZI Data) 
+   >
+   > Total ROM Size (Code + RO Data + RW Data)
+   >
+   > Total ROM Size就是最终的目标文件，也就是写到FLASH上的内容，请问，未什么包含RW Data的大小？
+   >
+   > 因为RW数据需要一个初始化值，这个值并不是凭空而来，而是代码中定义了，编译后保存在ROM中。
+   >
+   > 所以ROM会包含RW。
+   
+   往回看，则是Image component sizes。map文件每个大段之间用等号分开。
+   
+   ```
+   ==============================================================================
+   
+   Image component sizes
+   
+   
+         Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
+   
+          304         20          0         24          0       1705   main.o
+            0          0          0          0          0     203136   misc.o
+           64         26        304          0       1536        792   startup_stm32f10x_hd.o
+          298          0          0          0          0      12407   stm32f10x_gpio.o
+           26          0          0          0          0      16706   stm32f10x_it.o
+           32          6          0          0          0        557   stm32f10x_rcc.o
+          328         28          0          0          0       1845   system_stm32f10x.o
+   
+       ----------------------------------------------------------------------
+         1058         80        336         24       1536     237148   Object Totals
+            0          0         32          0          0          0   (incl. Generated)
+            6          0          0          0          0          0   (incl. Padding)
+   
+       ----------------------------------------------------------------------
+   
+         Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
+   
+            8          0          0          0          0         68   __main.o
+   ```
+   
+   本段说明了组成程序的各个文件的信心，每一个.o文件对应一个.c文件。
+   
+   从这我们还能看到程序暗地里使用了多少个函数库。
+   
+   再往上：
+   
+   `Memory Map of the image`，说明各文件使用的RAM分类情况。
+   
+   `Image Symbol Table`，这是个文件中使用的函数和RAM情况。
+   
+   在往上的内容我们基本也不会看了。
+   
+3. 这里我们关键看下函数入口的情况。
+
+   ```
+    RESET                                    0x08000000   Section      304  startup_stm32f10x_hd.o(RESET)
+       !!!main                                  0x08000130   Section        8  __main.o(!!!main)
+       !!!scatter                               0x08000138   Section       52  __scatter.o(!!!scatter)
+       !!handler_copy                           0x0800016c   Section       26  __scatter_copy.o(!!handler_copy)
+       !!handler_zi                             0x08000188   Section       28  __scatter_zi.o(!!handler_zi)
+   ```
+
+   在0x08000000，放的确实是向量表。芯片复位时就会从这里开始执行代码。
 
 ### 为什么能控制外设？
 
+因为有外设寄存器。
 
+外设寄存器是跟RAM一样的存在。（RAM是可以读写的，外设寄存器有些不能写）。
 
+这些寄存器链接到对应的硬件。请看规格书地址map图。
 
+我们只要写这些寄存器，就能实现对应外设的功能。
+
+我们看ST提供的库，比如下面函数
+
+```
+void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GPIO_PIN(GPIO_Pin));
+  
+  GPIOx->BSRR = GPIO_Pin;
+}
+```
+
+要设置一个GPIO的输出，就是配置GPIOx->BSRR = GPIO_Pin;
+
+这时什么意思呢？
+
+```
+typedef struct
+{
+  __IO uint32_t CRL;
+  __IO uint32_t CRH;
+  __IO uint32_t IDR;
+  __IO uint32_t ODR;
+  __IO uint32_t BSRR;
+  __IO uint32_t BRR;
+  __IO uint32_t LCKR;
+} GPIO_TypeDef;
+```
+
+我们可以看到，BSRR 是结构体GPIO_TypeDef的内容。
+
+ ```
+GPIO_SetBits(GPIOE, GPIO_Pin_7);
+ ```
+
+使用这个函数的时候我们会传入一个GPIOE，这是一个GPIO_TypeDef结构体指针。
+
+而GPIOE的定义是下面这些宏定义：
+
+```
+#define PERIPH_BASE           ((uint32_t)0x40000000) /*!< Peripheral base address in the alias region */
+
+#define APB2PERIPH_BASE       (PERIPH_BASE + 0x10000)
+
+#define GPIOE_BASE            (APB2PERIPH_BASE + 0x1800)
+
+#define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+
+```
+
+意思是：
+
+> 在`0x40000000`这个地址上，是`PERIPH_BASE`，也就是`PERIPH`外设的基地址，起始地址。
+>
+> 在`PERIPH_BASE`偏移`0x10000`的地方，放的是`APB2PERIPH`，也就是`APB2`总线上的外设。
+>
+> 在`APB2PERIPH_BASE`偏移`0x1800`的地方，是`GPIOE`外设寄存器地址。
+>
+> 第四行则是把一个`uint32_t`的值强行类型转换为`GPIO_TypeDef`指针。
+>
+> 如此，就能通过`GPIOE`这个宏定义找到 `GPIOE`外设的相关寄存器。
 
 ---
 
 end
 
-2020-03-12
+2020-04-18
 
