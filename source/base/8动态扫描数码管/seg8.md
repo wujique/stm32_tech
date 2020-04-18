@@ -146,24 +146,376 @@
 
 （文字待补充，看视频更好）
 
-第一步 ，静态显示，38译码器设定一个固定输出，固定选中一个数码管，控制595输出，让数码管显示数字。
+#### 第一步 
 
-第二步，固定显示，595输出固定值，调试38译码器，让数字在数码管上轮流显示。
+静态显示，38译码器设定一个固定输出，固定选中一个数码管，控制595输出，让数码管显示数字。
 
-第三步，将38译码器和595配合，动态刷8位数据，首先固定显示12345678。
+* 初始化硬件
 
-修改，选择数码管位置，效果不对。
-因为，变换内容时，要先关，怎么关？
+  ```
+  /*
+  	595_SDI--- ADC-TPX---PB0---数据输入
+  	595_LCLK---ADC-TPY---PB1---数据锁存---上升沿锁存
+  	595_SCLK---TP-S0---PC5---数据移位---上升沿移位
+  	595_RST---TP-S1---PC4---芯片复位--低电平复位
+  
+  	A138_A0---FSMC_D2---PD0
+  	A138_A1---FSMC_D1---PD15
+  	A138_A2---FSMC_D0---PD14
+  */
+  void seg_init(void)
+  {
+  	/* GPIOD Periph clock enable */
+  	  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+  	  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+  	  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+  	
+  	  /* 38译码器输入0 ，选中第4个数码管*/
+  	  GPIO_ResetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_14|GPIO_Pin_15);
+  	  /* Configure PD0 and PD2 in output pushpull mode */
+  	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_14|GPIO_Pin_15;
+  	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  	  GPIO_Init(GPIOD, &GPIO_InitStructure);
+  	
+  	  GPIO_ResetBits(GPIOB, GPIO_Pin_0|GPIO_Pin_1);
+  	  /* Configure PD0 and PD2 in output pushpull mode */
+  	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1;
+  	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  	  GPIO_Init(GPIOB, &GPIO_InitStructure);
+  	
+  	  GPIO_ResetBits(GPIOC, GPIO_Pin_4|GPIO_Pin_5);
+  	  /* Configure PD0 and PD2 in output pushpull mode */
+  	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4|GPIO_Pin_5;
+  	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  	  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  	
+  	  /* 拉高复位信号 */
+  	  GPIO_SetBits(GPIOC, GPIO_Pin_4);
+  
+  }
+  ```
 
-第四步，使用显示缓冲概念，对上层屏蔽数码管细节。
+* 138驱动
 
-第五步，修改缓冲内容，看扫描效果。
+  ```
+  /* 
+  	选择数码管，控制138选中对应数码管
+  	pos参数就是位置
+  */
+  void seg_select(uint8_t pos)
+  {
+  	if (pos == 1) {
+  		GPIO_SetBits(GPIOD, GPIO_Pin_14);
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_15);
+  	} else if (pos == 2) {
+  		GPIO_SetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_14);
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_15);	
+  	} else if(pos == 3) {
+  		GPIO_SetBits(GPIOD, GPIO_Pin_15|GPIO_Pin_14);
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_0);
+  	} else if(pos == 4) {
+  		GPIO_SetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_15|GPIO_Pin_14);
+  	} else if (pos == 5) {
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_15|GPIO_Pin_14);
+  	} else if(pos == 6) {
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_15|GPIO_Pin_14);
+  		GPIO_SetBits(GPIOD, GPIO_Pin_0);
+  	} else if(pos == 7) {
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_14);
+  		GPIO_SetBits(GPIOD, GPIO_Pin_15);
+  	} else if(pos == 8) {
+  		GPIO_ResetBits(GPIOD, GPIO_Pin_14);
+  		GPIO_SetBits(GPIOD, GPIO_Pin_0|GPIO_Pin_15);
+  	}
+  }
+  ```
+
+* 595驱动
+
+  ```
+  /*
+  	输出一位数码管显示数据
+  */
+  void seg_display_1seg(uint8_t segbit)
+  {
+  	uint8_t tmp;
+  	uint8_t cnt = 0;
+  
+  	tmp = segbit;
+  	
+  	cnt = 0;
+  	/* 拉低 595_LCLK*/
+  	GPIO_ResetBits(GPIOB, GPIO_Pin_1);
+  	
+  	while(1) {
+  		/* 拉低 595_SCLK*/
+  		GPIO_ResetBits(GPIOC, GPIO_Pin_5);
+  		/* 将数据从 SDI发出去*/	
+  		if((tmp & 0x80)== 0x00)//注意操作符的优先级
+  		{	
+  			GPIO_ResetBits(GPIOB, GPIO_Pin_0);		
+  		} else	{	
+  			GPIO_SetBits(GPIOB, GPIO_Pin_0);
+  		}
+  		
+  		tmp = tmp<<1; //移位
+  		
+  		delay(100);
+  		/* 拉高 595_SCLK 移位数据 */
+  		GPIO_SetBits(GPIOC, GPIO_Pin_5);
+  		delay(100);
+  		
+  		cnt++;
+  		if(cnt >= 8)
+  			break;
+  	}
+  	
+  	GPIO_SetBits(GPIOB, GPIO_Pin_1);
+  	delay(100);
+  		
+  }
+  ```
+
+* 应用
+
+  在main中初始化数码管，138固定输出值，调用595输出各种数字。
+
+  ```
+  seg_init();
+  
+  	/*
+  		第一步，调试595和138功能
+  		在第1个数码管显示0-9
+  	*/
+  	seg_select(1);
+  	seg_display_1seg(0x3f);
+  	seg_display_1seg(0x06);
+  	seg_display_1seg(0x5b);
+  	seg_display_1seg(0x4f);
+  	seg_display_1seg(0x66);
+  	seg_display_1seg(0x6d);
+  	seg_display_1seg(0x7d);
+  	seg_display_1seg(0x07);
+  	seg_display_1seg(0x7f);
+  	seg_display_1seg(0x67);
+  	seg_display_1seg(0x3f|0x80);
+  ```
+
+  输出数字对应的数码管段值，列入一个数组即可。
+
+  ```
+  uint8_t SegTab[10]={0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x67};
+  ```
+
+  单步运行看效果。
+
+#### 第二步
+
+固定显示，595输出固定值，调试38译码器，让数字在数码管上轮流显示相同的数字。
+
+代码和第一步类似。
+
+经过第一第二步调试后，138和595驱动就完成了。
+
+#### 第三步
+
+第一第二步只是实现了单个数码管显示，属于静态显示。
+
+前面讲原理时讲过，8位数码管使用动态显示防范。
+
+需要将38译码器和595配合，动态刷8位数据，我们现在尝试固定显示12345678。
+
+动态刷新是一个循环，因此在while循环中实现。
+
+代码如下：
+
+```
+
+	seg_select(1);
+	seg_display_1seg(0x3f);
+
+	seg_select(2);
+	seg_display_1seg(0x06);
+
+	seg_select(3);
+	seg_display_1seg(0x5b);
+
+	seg_select(4);
+	seg_display_1seg(0x4f);
+
+	seg_select(5);
+	seg_display_1seg(0x66);
+
+	seg_select(6);
+	seg_display_1seg(0x6d);
+
+	seg_select(7);
+	seg_display_1seg(0x7d);
+
+	seg_select(8);
+	seg_display_1seg(0x07);
+```
+
+单补运行，看效果。发现一个问题，在调用138切换数码管时，会将前面显示的内容显示到下一个位置。
+
+比如，数码管1显示1，调用数码管138切换显示位置到数码管2，这时，数码管会显示1。这是个问题。
+
+我们全速运行程序看看效果。显示的内容并不是87654321，而是76543218，而且有重影，影子隐隐约约是我们要的效果：87654321。
+
+如何解决这个问题呢？方法是：在切换显示位置钱，将显示内容清零。也就是将595的输出内容输出为0。
+
+增加一个seg_clear函数实现这个功能。实现如下：
+
+```
+void seg_clear(void)
+{
+	uint8_t cnt = 0;
+
+	cnt = 0;
+	/* 拉低 595_LCLK*/
+	GPIO_ResetBits(GPIOB, GPIO_Pin_1);
+	
+	while(1) {
+		/* 拉低 595_SCLK*/
+		GPIO_ResetBits(GPIOC, GPIO_Pin_5);
+		/* 将数据从 SDI*/	
+		GPIO_ResetBits(GPIOB, GPIO_Pin_0);		
+		delay(100);
+		/* 拉高 595_SCLK 移位数据 */
+		GPIO_SetBits(GPIOC, GPIO_Pin_5);
+		delay(100);
+		
+		cnt++;
+		if(cnt >= 8)
+			break;
+	}
+	
+	GPIO_SetBits(GPIOB, GPIO_Pin_1);
+	delay(100);
+		
+}
+```
+
+在前面的测试函数中所有seg_select函数之前都添加本函数。
+
+编译下载全速运行，效果正常。
+
+#### 第四步
+
+经过第三步调试，8位数码管的功能已经实现了。
+
+那，算驱动算完成了吗？
+
+没有。这里介绍一个很重要的概念：**时间片**。
+
+>  什么是时间片呢？我们将LED和8位数码管进行对比。
+>
+> LED，只要将IO置位，就能点亮，之后如果不改变LED状态，不需要在管它。
+>
+> 8位数码管呢？因为我们用动态扫描方法，是不能将8位数码管输出一次内容之后就不管了，要一直刷新。
+>
+> 前面原理也说过，每个数码管刷一次的时间间隔不能小于24ms。
+
+好，了解了时间片。那么应用程序要如何使用呢？
+
+> 应用程序只是想在数码管上显示一些数字而已，数码管怎么显示的，我是不管的。
+>
+> 为了显示数字，让我应用程序24ms就调用你的程序刷新显示，这是更加不可能的。
+
+讲到这，不知道大家了解没有。不了解也没关系，后面再慢慢理解。
+
+总之，一个目的：应用只是想显示一数字。数码管驱动要时间片维持显示。
+
+怎么实现呢？
+
+用缓冲。缓冲就是一个组数，这个数组是应用和驱动之间的联系。
+
+应用程序将要显示的内容丢到缓冲。驱动将缓冲中的内容显示到数码管。
+
+如此，就达到了最简单的**模块分离**。
+
+* 有8位数码管，就定义8个空间的数组。
+
+  ```
+  /* 动态扫描 添加缓冲功能 */
+  /* 8位数码管的显示内容 */
+  char BufIndex = 0;
+  /* 缓冲，保存的是对应数码管段值 */
+  char Seg8DisBuf[8]={0x7f,0x07,0x7d,0x6d,0x66,0x4f,0x5b,0x06};
+  ```
+
+* 定义一个函数，用于动态刷新数码管。这个函数最好放在定时或者RTOS的定时任务中执行。现在我们还没学会，可以放在main函数中的while运行。
+
+  ```
+  /*
+  	动态刷新
+  	定时调用本函数，
+  	本函数对应用层屏蔽，意思是：应用层不知道我是通过动态刷新实现8位数码管功能。
+  */
+  void seg_display_task(void )
+  {
+  	seg_clear();
+  	seg_select(BufIndex+1);
+  	seg_display_1seg(Seg8DisBuf[BufIndex]);
+  
+  	BufIndex++;
+  	if(BufIndex >=8)
+  		BufIndex = 0;
+  }
+  ```
+
+* 定义一个函数，给应用程序调用，改变数码管缓冲的值。
+
+  ```
+  /*
+  	segbit 数码管段值，为1的bit点亮
+  	seg 数码管位置，1~8
+  */
+  void seg_fill_disbuf(uint8_t segbit, uint8_t seg)
+  {
+  	Seg8DisBuf[seg-1] = 	segbit;
+  	return;
+  }
+  ```
+
+* 在main函数中调用数码挂刷新功能。
+
+  ```
+  /*-----------------驱动--------------*/
+  	/* 使用显示缓冲方法，要改变显示内容，
+  	调用函数seg_fill_disbuf改变Seg8DisBuf中的内容即可 */
+  	seg_display_task();
+  
+  	/*-----------------应用-----------------*/
+  	cnt++;
+  	if(cnt >= 1000) {
+  		cnt=0;
+  		disnum ++;
+  		if(disnum > 9) 
+  			disnum = 0;
+  
+  		seg_fill_disbuf(SegTab[disnum], 1);
+  
+  	}
+  	/*----------------------------------*/
+  	delay(1000);
+  
+  ```
+
+  驱动是数码管的内容，while循环最后delay 1000，也就是刷新间隔。现在没定时器，暂时定一个值，数码管不闪烁即可。
+
+  应用就是延时1000次个delay(1000)后，改变数码管1显示的数字，从0显示到9。
+
+  编译下载看效果。
 
 ---
 
 end
 
-20200319
+20200418
 
 
 
